@@ -44,8 +44,8 @@ function Section({ title, sub, items, onEdit }: { title: string; sub: string; it
   return (
     <div className="mb-6">
       <div className="mb-3 flex items-baseline gap-3">
-        <h2 className="h-display text-[22px]">{title}</h2>
-        <span className="text-[12px] text-muted">{sub}</span>
+        <h2 className="h-display text-[19px]">{title}</h2>
+        <span className="text-[11.5px] text-muted">{sub}</span>
       </div>
       <div className="grid gap-4 md:grid-cols-2 2xl:grid-cols-4">
         {items.map((w) => {
@@ -56,10 +56,10 @@ function Section({ title, sub, items, onEdit }: { title: string; sub: string; it
               <div className="flex items-start justify-between gap-2">
                 <div>
                   <div className="flex items-center gap-2">
-                    <span className={clsx('rounded-md px-1.5 py-0.5 text-[10.5px] font-bold', w.country === 'CN' ? 'bg-danger-50 text-danger' : 'bg-accent-50 text-accent')}>{w.code}</span>
-                    <span className="text-[14px] font-medium">{w.name}</span>
+                    <span className={clsx('rounded-md px-1.5 py-0.5 text-[10px] font-bold', w.country === 'CN' ? 'bg-danger-50 text-danger' : 'bg-accent-50 text-accent')}>{w.code}</span>
+                    <span className="text-[13px] font-medium">{w.name}</span>
                   </div>
-                  <div className="mt-0.5 text-[11.5px] text-muted">
+                  <div className="mt-0.5 text-[11px] text-muted">
                     {w.cityName}
                     {w.cityLocal && w.country === 'CN' ? ` · ${w.cityLocal}` : ''} · {w.role === 'origin' ? 'приём' : w.role === 'transit' ? 'транзит' : 'выдача'}
                   </div>
@@ -68,14 +68,14 @@ function Section({ title, sub, items, onEdit }: { title: string; sub: string; it
                   <Pencil size={13} />
                 </button>
               </div>
-              <div className="mt-3 space-y-1.5 text-[12px]">
+              <div className="mt-3 space-y-1.5 text-[11.5px]">
                 <div className="flex gap-2">
                   <MapPin size={13} className="mt-0.5 shrink-0 text-muted" />
                   <span className="leading-snug">{w.address}</span>
                 </div>
                 {w.addressLocal && (
                   <div className="flex items-start gap-2 rounded-lg bg-soft px-2 py-1.5">
-                    <span className="flex-1 text-[11.5px] leading-snug">{w.addressLocal}</span>
+                    <span className="flex-1 text-[11px] leading-snug">{w.addressLocal}</span>
                     <CopyButton text={w.addressLocal} label="Копир." />
                   </div>
                 )}
@@ -93,7 +93,7 @@ function Section({ title, sub, items, onEdit }: { title: string; sub: string; it
                 </div>
               </div>
               <div className="mt-4">
-                <div className="flex justify-between text-[11px]">
+                <div className="flex justify-between text-[10.5px]">
                   <span className="text-muted">Заполненность</span>
                   <span className="num font-medium">
                     {num(st.m3 ?? 0, 1)} / {num(w.capacityM3)} м³
@@ -115,8 +115,8 @@ function Section({ title, sub, items, onEdit }: { title: string; sub: string; it
                     ]
                 ).map(([k, v, to]) => (
                   <Link key={k as string} to={to as string} className="rounded-xl bg-soft px-2 py-2 hover:bg-[#F1F1EE]">
-                    <div className={clsx('num text-[17px] font-medium', k === 'Без кода' && (v as number) > 0 && 'text-danger')}>{num(v as number)}</div>
-                    <div className="text-[10.5px] text-muted">{k}</div>
+                    <div className={clsx('num text-[15px] font-medium', k === 'Без кода' && (v as number) > 0 && 'text-danger')}>{num(v as number)}</div>
+                    <div className="text-[10px] text-muted">{k}</div>
                   </Link>
                 ))}
               </div>
@@ -138,7 +138,7 @@ function Section({ title, sub, items, onEdit }: { title: string; sub: string; it
                   ))}
                 </div>
               )}
-              <div className="mt-auto pt-3 text-[11px] text-muted">{st.kg ? `${kg(st.kg)} на хранении` : ''}</div>
+              <div className="mt-auto pt-3 text-[10.5px] text-muted">{st.kg ? `${kg(st.kg)} на хранении` : ''}</div>
             </Card>
           );
         })}

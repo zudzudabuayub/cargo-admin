@@ -60,8 +60,8 @@ export default function Chats() {
     <div className="mx-auto max-w-[1600px]">
       <div className="mb-4 flex flex-wrap items-end justify-between gap-3">
         <div>
-          <h1 className="h-display text-[30px] leading-tight">Чаты</h1>
-          <div className="mt-1 text-[12.5px] text-muted">Клиенты пишут из приложения, водители и склады — из своих чатов. Сообщения приходят в реальном времени.</div>
+          <h1 className="h-display text-[26px] leading-tight">Чаты</h1>
+          <div className="mt-1 text-[11.5px] text-muted">Клиенты пишут из приложения, водители и склады — из своих чатов. Сообщения приходят в реальном времени.</div>
         </div>
       </div>
       <div className="grid h-[calc(100vh-150px)] min-h-[600px] gap-3 lg:grid-cols-[310px_minmax(0,1fr)] xl:grid-cols-[310px_minmax(0,1fr)_300px]">
@@ -103,16 +103,16 @@ export default function Chats() {
                   </div>
                   <div className="min-w-0 flex-1">
                     <div className="flex items-center gap-1.5">
-                      <span className="truncate text-[12.5px] font-medium">{cv.title}</span>
+                      <span className="truncate text-[11.5px] font-medium">{cv.title}</span>
                       {cv.pinned ? <Pin size={11} className="shrink-0 text-muted" /> : null}
-                      <span className="ml-auto shrink-0 text-[10.5px] text-muted">{cv.lastMessageAt ? (Date.now() - Date.parse(cv.lastMessageAt) < 86400000 ? time(cv.lastMessageAt) : day(cv.lastMessageAt)) : ''}</span>
+                      <span className="ml-auto shrink-0 text-[10px] text-muted">{cv.lastMessageAt ? (Date.now() - Date.parse(cv.lastMessageAt) < 86400000 ? time(cv.lastMessageAt) : day(cv.lastMessageAt)) : ''}</span>
                     </div>
                     <div className="flex items-center gap-1.5">
-                      <span className={clsx('truncate text-[11.5px]', cv.unreadAdmin ? 'font-medium text-ink' : 'text-muted')}>
+                      <span className={clsx('truncate text-[11px]', cv.unreadAdmin ? 'font-medium text-ink' : 'text-muted')}>
                         {cv.clientCode && <span className="text-accent">{cv.clientCode} · </span>}
                         {cv.lastMessage ?? 'Нет сообщений'}
                       </span>
-                      {cv.unreadAdmin > 0 && <span className="ml-auto grid h-[18px] min-w-[18px] shrink-0 place-items-center rounded-full bg-accent px-1 text-[10px] font-semibold text-white">{cv.unreadAdmin}</span>}
+                      {cv.unreadAdmin > 0 && <span className="ml-auto grid h-[18px] min-w-[18px] shrink-0 place-items-center rounded-full bg-accent px-1 text-[9.5px] font-semibold text-white">{cv.unreadAdmin}</span>}
                     </div>
                   </div>
                 </button>
@@ -129,8 +129,8 @@ export default function Chats() {
               <div className="flex items-center gap-3 border-b border-line px-5 py-3">
                 {conv.kind === 'client' ? <Avatar name={conv.title} color={conv.context?.client?.color} size={34} /> : <span className="grid h-[34px] w-[34px] place-items-center rounded-full bg-ink text-white">{(() => { const I = kindIcon(conv.kind); return <I size={15} />; })()}</span>}
                 <div className="min-w-0 flex-1">
-                  <div className="text-[13.5px] font-medium">{conv.title}</div>
-                  <div className="text-[11px] text-muted">
+                  <div className="text-[12.5px] font-medium">{conv.title}</div>
+                  <div className="text-[10.5px] text-muted">
                     {conv.kind === 'client' && `Клиент ${conv.context?.client?.code} · ${conv.context?.client?.phone} · через приложение`}
                     {conv.kind === 'driver' && `Водитель · ${conv.context?.driver?.phone}`}
                     {conv.kind === 'warehouse' && `${conv.context?.warehouse?.manager} · ${conv.context?.warehouse?.phone}`}
@@ -163,25 +163,25 @@ export default function Chats() {
                     <div key={m.id}>
                       {showDay && (
                         <div className="my-3 text-center">
-                          <span className="rounded-full bg-white px-2.5 py-1 text-[10.5px] text-muted shadow-card">{day(m.createdAt)}</span>
+                          <span className="rounded-full bg-white px-2.5 py-1 text-[10px] text-muted shadow-card">{day(m.createdAt)}</span>
                         </div>
                       )}
                       <div className={clsx('flex', mine || sys ? 'justify-end' : 'justify-start')}>
                         <div
                           className={clsx(
-                            'max-w-[72%] whitespace-pre-line rounded-2xl px-3.5 py-2 text-[12.5px] leading-relaxed',
+                            'max-w-[72%] whitespace-pre-line rounded-2xl px-3.5 py-2 text-[11.5px] leading-relaxed',
                             mine && 'rounded-br-md bg-ink text-white',
                             sys && 'rounded-br-md bg-accent-50 text-ink ring-1 ring-accent-100',
                             !mine && !sys && 'rounded-bl-md bg-white shadow-card',
                           )}
                         >
                           {sys && (
-                            <div className="mb-0.5 flex items-center gap-1 text-[10.5px] font-semibold text-accent">
+                            <div className="mb-0.5 flex items-center gap-1 text-[10px] font-semibold text-accent">
                               <Bot size={11} /> Автоуведомление
                             </div>
                           )}
                           {m.text}
-                          <div className={clsx('mt-0.5 text-right text-[10px]', mine ? 'text-white/50' : 'text-muted')}>
+                          <div className={clsx('mt-0.5 text-right text-[9.5px]', mine ? 'text-white/50' : 'text-muted')}>
                             {mine && m.senderName ? `${m.senderName.split(' ')[0]} · ` : ''}
                             {time(m.createdAt)}
                           </div>
@@ -195,7 +195,7 @@ export default function Chats() {
               <div className="border-t border-line p-3">
                 <div className="mb-2 flex gap-1.5 overflow-x-auto scroll-thin">
                   {templates?.map((t) => (
-                    <button key={t.title} onClick={() => setText(t.text)} className="inline-flex h-7 shrink-0 items-center gap-1 rounded-full bg-soft px-2.5 text-[11.5px] text-ink-2 hover:bg-accent-50 hover:text-accent">
+                    <button key={t.title} onClick={() => setText(t.text)} className="inline-flex h-7 shrink-0 items-center gap-1 rounded-full bg-soft px-2.5 text-[11px] text-ink-2 hover:bg-accent-50 hover:text-accent">
                       <Zap size={11} /> {t.title}
                     </button>
                   ))}
@@ -231,7 +231,7 @@ export default function Chats() {
 
 function Context({ conv, onInsert }: { conv: any; onInsert: (t: string) => void }) {
   const ctx = conv.context;
-  if (!ctx) return <Card className="p-5 text-[12px] text-muted">Внутренний чат команды</Card>;
+  if (!ctx) return <Card className="p-5 text-[11.5px] text-muted">Внутренний чат команды</Card>;
   if (ctx.type === 'client') {
     const c = ctx.client;
     return (
@@ -239,10 +239,10 @@ function Context({ conv, onInsert }: { conv: any; onInsert: (t: string) => void 
         <div className="flex items-center gap-3">
           <Avatar name={c.name} color={c.color} size={40} />
           <div>
-            <Link to={`/clients/${c.id}`} className="text-[13px] font-medium hover:text-accent">
+            <Link to={`/clients/${c.id}`} className="text-[12px] font-medium hover:text-accent">
               {c.name}
             </Link>
-            <div className="text-[11.5px] text-muted">
+            <div className="text-[11px] text-muted">
               {c.code} · {c.warehouseName}
             </div>
           </div>
@@ -250,23 +250,23 @@ function Context({ conv, onInsert }: { conv: any; onInsert: (t: string) => void 
         <div className="mt-3 grid grid-cols-2 gap-2">
           <div className="rounded-xl bg-soft px-3 py-2">
             <div className="label">Баланс</div>
-            <div className={clsx('num mt-0.5 text-[14px] font-medium', c.balance < -0.5 ? 'text-danger' : '')}>{money(c.balance)}</div>
+            <div className={clsx('num mt-0.5 text-[13px] font-medium', c.balance < -0.5 ? 'text-danger' : '')}>{money(c.balance)}</div>
           </div>
           <div className="rounded-xl bg-soft px-3 py-2">
             <div className="label">В работе</div>
-            <div className="num mt-0.5 text-[14px] font-medium">{ctx.parcels.length}</div>
+            <div className="num mt-0.5 text-[13px] font-medium">{ctx.parcels.length}</div>
           </div>
         </div>
         <div className="label mb-1.5 mt-4">Активные посылки</div>
         <div className="space-y-1.5">
-          {ctx.parcels.length === 0 && <div className="text-[12px] text-muted">Нет активных посылок</div>}
+          {ctx.parcels.length === 0 && <div className="text-[11.5px] text-muted">Нет активных посылок</div>}
           {ctx.parcels.map((p: any) => (
             <div key={p.id} className="rounded-xl border border-line px-3 py-2">
               <div className="flex items-center justify-between gap-2">
-                <span className="truncate font-mono text-[11px]">{p.trackNumber}</span>
+                <span className="truncate font-mono text-[10.5px]">{p.trackNumber}</span>
                 <Badge tone={PARCEL_STATUS[p.status].tone}>{PARCEL_STATUS[p.status].label}</Badge>
               </div>
-              <div className="mt-1 flex items-center justify-between text-[11px] text-muted">
+              <div className="mt-1 flex items-center justify-between text-[10.5px] text-muted">
                 <span className="truncate">
                   {p.description}
                   {p.shipmentCode ? ` · ${p.shipmentCode}` : ''}
@@ -312,26 +312,26 @@ function Context({ conv, onInsert }: { conv: any; onInsert: (t: string) => void 
     const s = ctx.shipment;
     return (
       <Card className="px-4 py-4">
-        <div className="text-[13px] font-medium">{ctx.driver.name}</div>
-        <div className="text-[11.5px] text-muted">
+        <div className="text-[12px] font-medium">{ctx.driver.name}</div>
+        <div className="text-[11px] text-muted">
           {ctx.driver.phone} · стаж {ctx.driver.experienceYears} лет
         </div>
         {s && (
           <Link to={`/shipments/${s.id}`} className="mt-3 block rounded-xl bg-soft px-3 py-2.5 hover:bg-[#F1F1EE]">
             <div className="label">Текущий рейс</div>
-            <div className="mt-0.5 text-[13px] font-medium">{s.code}</div>
-            <div className="text-[11.5px] text-muted">
+            <div className="mt-0.5 text-[12px] font-medium">{s.code}</div>
+            <div className="text-[11px] text-muted">
               {s.model} · {s.plate}
             </div>
-            <div className="mt-1 text-[11.5px] text-accent">ETA {day(s.etaAt)} →</div>
+            <div className="mt-1 text-[11px] text-accent">ETA {day(s.etaAt)} →</div>
           </Link>
         )}
       </Card>
     );
   }
   return (
-    <Card className="px-4 py-4 text-[12px]">
-      <div className="text-[13px] font-medium">{ctx.warehouse.name}</div>
+    <Card className="px-4 py-4 text-[11.5px]">
+      <div className="text-[12px] font-medium">{ctx.warehouse.name}</div>
       <div className="mt-1 text-muted">{ctx.warehouse.address}</div>
       <div className="mt-3 rounded-xl bg-soft px-3 py-2">
         <div className="label">Менеджер</div>

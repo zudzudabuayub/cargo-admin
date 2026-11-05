@@ -606,6 +606,32 @@ function seedAll() {
   msg(team, 'admin', 'Сделано ✅', 1440, 'Нигина Саидова');
   run('UPDATE conversations SET lastMessageAt = ?, lastMessage = ? WHERE id = ?', ago(1440 * 60000), 'Сделано ✅', team);
 
+  // Автоуведомления клиентам (как их отправляет система при отправке и прибытии рейса)
+  const convFor = (clientId: number) => {
+    const ex = get<{ id: number }>(`SELECT id FROM conversations WHERE kind = 'client' AND clientId = ?`, clientId);
+    if (ex) return ex.id;
+    return conv('client', { clientId }, clientName(clientId).name);
+  };
+  for (const cs of createdShipments) {
+    const sh = get<any>('SELECT * FROM shipments WHERE id = ?', cs.id);
+    if (!sh.departedAt) continue;
+    const destWh = get<any>('SELECT name, address, workHours FROM warehouses WHERE id = ?', sh.destWarehouseId);
+    const groups = all<{ clientId: number; n: number; sum: number }>(
+      `SELECT clientId, COUNT(*) n, ROUND(SUM(price),2) sum FROM parcels WHERE shipmentId = ? AND clientId IS NOT NULL GROUP BY clientId`,
+      sh.id,
+    );
+    for (const g of groups) {
+      const c = convFor(g.clientId);
+      msg(c, 'system', `Ваши посылки (${g.n} шт.) отправлены рейсом ${sh.code}. Ориентировочная дата прибытия — ${new Date(sh.plannedArrival).toLocaleDateString('ru-RU', { day: 'numeric', month: 'long' })}.`, (NOW - Date.parse(sh.departedAt)) / 60000 - 5, 'Карго');
+      if (sh.arrivedAt)
+        msg(c, 'system', `Ваши посылки прибыли на ${destWh.name} (${destWh.address}). Количество: ${g.n}. К оплате: $${g.sum}. Время работы: ${destWh.workHours}.`, (NOW - Date.parse(sh.arrivedAt)) / 60000 - 10, 'Карго');
+    }
+  }
+  run(
+    `UPDATE conversations SET lastMessageAt = (SELECT MAX(createdAt) FROM messages m WHERE m.conversationId = conversations.id),
+       lastMessage = (SELECT text FROM messages m WHERE m.conversationId = conversations.id ORDER BY createdAt DESC LIMIT 1)`,
+  );
+
   // ---------- Уведомления ----------
   const N = (kind: string, title: string, body: string, link: string, level: string, minAgo: number, read = 0) =>
     insert('notifications', { kind, title, body, link, level, read, createdAt: ago(minAgo * 60000) });
@@ -616,8 +642,17 @@ function seedAll() {
   N('payment', 'Поступил платёж $500', 'Предоплата от ООО «Пайванд Сохтмон»', '/finance', 'success', 2900, 1);
   N('chat', 'Новое сообщение в чате', 'Клиент спрашивает адрес склада в Китае', '/chats', 'info', 9);
 
-  // Журнал
+  // Журнал (включая то, что агенты сделали сами)
   insert('audit_log', { userId: adminId, userName: 'Фаррух Рахимов', action: 'auth.login', entity: null, entityId: null, details: null, createdAt: ago(3 * H) });
+  const AUTO: [string, string, string, number][] = [
+    ['Агент исключений', 'auto.flag_delays', 'Отмечено 3 задержки на КПП Иркештам и открыты инциденты', 42],
+    ['Агент клиентов', 'auto.draft_messages', 'Подготовлено 12 уведомлений клиентам о новом сроке', 48],
+    ['Агент маршрутов', 'auto.eta', 'Пересчитаны ETA 9 рейсов по данным GPS', 55],
+    ['Агент автопарка', 'auto.fleet_check', 'Проверено топливо и пробег 14 траков, 1 на ремонте', 95],
+    ['Агент-диспетчер', 'auto.load_check', 'Проверена загрузка рейсов на складах Гуанчжоу и Иу', 130],
+    ['Финансовый аналитик', 'auto.report', 'Собран отчёт по выручке за неделю', 260],
+  ];
+  for (const [who, action, details, min] of AUTO) insert('audit_log', { userId: null, userName: who, action, entity: 'agents', entityId: null, details, createdAt: ago(min * 60000) });
 }
 
 // CLI

@@ -21,8 +21,8 @@ export function ClientPicker({ value, onChange, placeholder = 'Код клиен
     return (
       <div className="flex h-9 items-center gap-2 rounded-lg border border-accent-200 bg-accent-50/60 px-2">
         <Avatar name={value.name} color={value.color} size={22} />
-        <span className="text-[12.5px] font-medium">{value.name}</span>
-        <span className="text-[12px] text-accent">{value.code}</span>
+        <span className="text-[11.5px] font-medium">{value.name}</span>
+        <span className="text-[11.5px] text-accent">{value.code}</span>
         <button type="button" onClick={() => onChange(null)} className="ml-auto grid h-6 w-6 place-items-center rounded-full text-muted hover:bg-white">
           <X size={13} />
         </button>
@@ -54,9 +54,9 @@ export function ClientPicker({ value, onChange, placeholder = 'Код клиен
               className="flex w-full items-center gap-2 rounded-lg px-2 py-1.5 text-left hover:bg-soft"
             >
               <Avatar name={c.name} color={c.color} size={22} />
-              <span className="text-[12.5px] font-medium">{c.name}</span>
-              <span className="text-[11.5px] text-accent">{c.code}</span>
-              <span className="ml-auto text-[11px] text-muted">{c.phone}</span>
+              <span className="text-[11.5px] font-medium">{c.name}</span>
+              <span className="text-[11px] text-accent">{c.code}</span>
+              <span className="ml-auto text-[10.5px] text-muted">{c.phone}</span>
             </button>
           ))}
         </div>
@@ -177,7 +177,7 @@ export function ReceiveParcelModal({ open, onClose, onDone }: { open: boolean; o
           </Field>
         </div>
         {lookup && (
-          <div className={clsx('fade-up flex items-center gap-2 rounded-xl px-3 py-2 text-[12px]', lookup.status === 'expected' ? 'bg-ok-50 text-ok' : 'bg-warn-50 text-[#9A5D00]')}>
+          <div className={clsx('fade-up flex items-center gap-2 rounded-xl px-3 py-2 text-[11.5px]', lookup.status === 'expected' ? 'bg-ok-50 text-ok' : 'bg-warn-50 text-[#9A5D00]')}>
             {lookup.status === 'expected' ? <Check size={14} /> : <ShieldCheck size={14} />}
             {lookup.status === 'expected'
               ? `Ожидалась клиентом ${lookup.clientCode} (${lookup.clientName}) — добавлена ${dateTime(lookup.createdAt)}`
@@ -225,12 +225,12 @@ export function ReceiveParcelModal({ open, onClose, onDone }: { open: boolean; o
           <div>
             <div className="label">Стоимость доставки</div>
             <div className="mt-1 flex items-baseline gap-2">
-              <span className="h-display num text-[26px]">{calc ? money(calc.total) : '—'}</span>
-              {calc && <span className="num text-[12px] text-muted">≈ {num(calc.tjs)} сомони</span>}
+              <span className="h-display num text-[22px]">{calc ? money(calc.total) : '—'}</span>
+              {calc && <span className="num text-[11.5px] text-muted">≈ {num(calc.tjs)} сомони</span>}
             </div>
           </div>
           {calc && (
-            <div className="text-right text-[11.5px] text-muted">
+            <div className="text-right text-[11px] text-muted">
               <div>
                 Расчёт <b className="text-ink">{calc.chargedBy === 'volume' ? 'по объёму' : 'по весу'}</b>
                 {calc.density ? ` · плотность ${calc.density} кг/м³` : ''}
@@ -243,7 +243,7 @@ export function ReceiveParcelModal({ open, onClose, onDone }: { open: boolean; o
         </div>
       </div>
       <div className="flex items-center justify-between gap-3 border-t border-line px-6 py-4">
-        <label className="flex items-center gap-2 text-[12px] text-ink-2">
+        <label className="flex items-center gap-2 text-[11.5px] text-ink-2">
           <Toggle checked={notify} onChange={setNotify} /> Уведомить клиента в приложении
         </label>
         <div className="flex gap-2">
@@ -289,7 +289,7 @@ export function RerouteModal({ open, onClose, option, shipment, onApproved }: { 
       <ModalHeader
         onClose={onClose}
         eyebrow={
-          <span className="inline-flex items-center gap-1.5 rounded-full bg-accent-50 px-2 py-0.5 text-[11px] font-medium text-accent">
+          <span className="inline-flex items-center gap-1.5 rounded-full bg-accent-50 px-2 py-0.5 text-[10.5px] font-medium text-accent">
             <span className="h-2 w-2 rounded-full bg-accent" /> Ассистент маршрутов
           </span>
         }
@@ -301,8 +301,8 @@ export function RerouteModal({ open, onClose, option, shipment, onApproved }: { 
           <div className="rounded-2xl bg-soft p-3.5">
             <div className="label">Сейчас · {option.currentVia.replace('через ', '')}</div>
             <div className="mt-1.5 flex items-baseline gap-2">
-              <span className="h-display num text-[24px]">{day(option.currentEta)}</span>
-              <span className="num text-[12px] text-muted">{time(option.currentEta)}</span>
+              <span className="h-display num text-[21px]">{day(option.currentEta)}</span>
+              <span className="num text-[11.5px] text-muted">{time(option.currentEta)}</span>
             </div>
             <Badge tone="red" className="mt-2">
               Опоздание к сроку
@@ -311,8 +311,8 @@ export function RerouteModal({ open, onClose, option, shipment, onApproved }: { 
           <div className="rounded-2xl bg-accent-50/70 p-3.5 ring-1 ring-accent-200">
             <div className="label">Предложено · {option.via.replace('через ', '')}</div>
             <div className="mt-1.5 flex items-baseline gap-2">
-              <span className="h-display num text-[24px]">{day(option.proposedEta)}</span>
-              <span className="num text-[12px] text-muted">{time(option.proposedEta)}</span>
+              <span className="h-display num text-[21px]">{day(option.proposedEta)}</span>
+              <span className="num text-[11.5px] text-muted">{time(option.proposedEta)}</span>
             </div>
             <Badge tone="lime" className="mt-2">
               −{hoursLabel(option.savedHours)}
@@ -320,13 +320,13 @@ export function RerouteModal({ open, onClose, option, shipment, onApproved }: { 
           </div>
           {approved && (
             <div className="pointer-events-none absolute inset-0 grid place-items-center">
-              <div className="stamp flex items-center gap-2 rounded-xl border-[3px] border-ok bg-white/90 px-5 py-2 text-[22px] font-bold tracking-[0.12em] text-ok">
+              <div className="stamp flex items-center gap-2 rounded-xl border-[3px] border-ok bg-white/90 px-5 py-2 text-[19px] font-bold tracking-[0.12em] text-ok">
                 <Check size={22} strokeWidth={3} /> ОДОБРЕНО
               </div>
             </div>
           )}
         </div>
-        <div className="mt-4 divide-y divide-line text-[12.5px]">
+        <div className="mt-4 divide-y divide-line text-[11.5px]">
           {[
             ['Ожидаемый эффект', `Прибытие на ${hoursLabel(option.savedHours)} раньше`],
             ['Доп. расстояние', `${option.extraKm >= 0 ? '+' : ''}${num(option.extraKm)} км · ≈ $${fuelUsd} топливо`],
@@ -339,7 +339,7 @@ export function RerouteModal({ open, onClose, option, shipment, onApproved }: { 
             </div>
           ))}
         </div>
-        <div className="mt-3 flex items-center gap-2 rounded-xl bg-soft px-3 py-2 text-[11.5px] text-muted">
+        <div className="mt-3 flex items-center gap-2 rounded-xl bg-soft px-3 py-2 text-[11px] text-muted">
           <ShieldCheck size={14} /> Действие запишется в журнал: ваше имя, рекомендация ассистента и результат.
         </div>
       </div>
@@ -403,14 +403,14 @@ export function ShareTrackingModal({ open, onClose, shipment }: { open: boolean;
         <Field label="Ссылка для отслеживания">
           <div className="flex h-9 items-center gap-2 rounded-lg border border-line-2 bg-soft px-3">
             <Link2 size={14} className="text-muted" />
-            <span className="flex-1 truncate font-mono text-[12px]">{url || 'создаём ссылку…'}</span>
+            <span className="flex-1 truncate font-mono text-[11.5px]">{url || 'создаём ссылку…'}</span>
             {url && <CopyButton text={url} />}
           </div>
         </Field>
         <div>
           <div className="mb-1.5 flex items-center justify-between">
-            <span className="text-[11.5px] font-medium text-ink-2">Отправить в чат приложения</span>
-            <button className="text-[11.5px] text-accent" onClick={() => setSelected(allSelected ? [] : clients.map((c) => c.id))}>
+            <span className="text-[11px] font-medium text-ink-2">Отправить в чат приложения</span>
+            <button className="text-[11px] text-accent" onClick={() => setSelected(allSelected ? [] : clients.map((c) => c.id))}>
               {allSelected ? 'Снять все' : `Все клиенты рейса (${clients.length})`}
             </button>
           </div>
@@ -425,8 +425,8 @@ export function ShareTrackingModal({ open, onClose, shipment }: { open: boolean;
                 />
                 <Avatar name={c.name} color={c.color} size={28} />
                 <div className="min-w-0 flex-1">
-                  <div className="text-[12.5px] font-medium">{c.name}</div>
-                  <div className="truncate text-[11px] text-muted">
+                  <div className="text-[11.5px] font-medium">{c.name}</div>
+                  <div className="truncate text-[10.5px] text-muted">
                     {c.code} · {c.phone} · {c.parcels} пос.
                   </div>
                 </div>
@@ -435,7 +435,7 @@ export function ShareTrackingModal({ open, onClose, shipment }: { open: boolean;
           </div>
         </div>
         <div>
-          <div className="mb-1.5 text-[11.5px] font-medium text-ink-2">Что увидит клиент</div>
+          <div className="mb-1.5 text-[11px] font-medium text-ink-2">Что увидит клиент</div>
           <div className="divide-y divide-line rounded-xl border border-line">
             {[
               ['Карта и ETA', 'Обновляется каждые 30 секунд', showMap, setShowMap],
@@ -444,8 +444,8 @@ export function ShareTrackingModal({ open, onClose, shipment }: { open: boolean;
             ].map(([t, s, v, fn]: any) => (
               <div key={t} className="flex items-center justify-between px-3 py-2.5">
                 <div>
-                  <div className="text-[12.5px] font-medium">{t}</div>
-                  <div className="text-[11px] text-muted">{s}</div>
+                  <div className="text-[11.5px] font-medium">{t}</div>
+                  <div className="text-[10.5px] text-muted">{s}</div>
                 </div>
                 <Toggle checked={v} onChange={fn} />
               </div>
@@ -461,7 +461,7 @@ export function ShareTrackingModal({ open, onClose, shipment }: { open: boolean;
         </Field>
       </div>
       <div className="flex items-center justify-between border-t border-line px-6 py-4">
-        <span className="flex items-center gap-1.5 text-[11.5px] text-muted">
+        <span className="flex items-center gap-1.5 text-[11px] text-muted">
           <ShieldCheck size={13} /> Ссылку можно отключить в любой момент
         </span>
         <div className="flex gap-2">
@@ -520,21 +520,21 @@ export function PaymentModal({ open, onClose, client: fixedClient, onDone }: { o
       <div className="grid gap-4 px-6 py-3">
         <Field label="Клиент">{fixedClient ? <ClientPicker value={client} onChange={() => {}} /> : <ClientPicker value={client} onChange={setClient} />}</Field>
         {detail && (
-          <div className="flex items-center justify-between rounded-xl bg-soft px-3 py-2 text-[12px]">
+          <div className="flex items-center justify-between rounded-xl bg-soft px-3 py-2 text-[11.5px]">
             <span className="text-muted">Баланс</span>
             <span className={clsx('num font-medium', detail.balance < 0 ? 'text-danger' : 'text-ok')}>{money(detail.balance)}</span>
           </div>
         )}
         {unpaid.length > 0 && (
           <div>
-            <div className="mb-1.5 text-[11.5px] font-medium text-ink-2">Неоплаченные посылки</div>
+            <div className="mb-1.5 text-[11px] font-medium text-ink-2">Неоплаченные посылки</div>
             <div className="max-h-[150px] overflow-y-auto rounded-xl border border-line scroll-thin">
               {unpaid.map((p: any) => (
                 <label key={p.id} className="flex cursor-pointer items-center gap-3 border-b border-line/70 px-3 py-1.5 last:border-0 hover:bg-soft">
                   <input type="checkbox" className="h-4 w-4 accent-[#6A4CFF]" checked={picked.includes(p.id)} onChange={(e) => setPicked((s) => (e.target.checked ? [...s, p.id] : s.filter((x) => x !== p.id)))} />
-                  <span className="font-mono text-[11.5px]">{p.trackNumber}</span>
+                  <span className="font-mono text-[11px]">{p.trackNumber}</span>
                   <Badge tone={PARCEL_STATUS[p.status]?.tone}>{PARCEL_STATUS[p.status]?.label}</Badge>
-                  <span className="num ml-auto text-[12px] font-medium">{money(p.price)}</span>
+                  <span className="num ml-auto text-[11.5px] font-medium">{money(p.price)}</span>
                 </label>
               ))}
             </div>
@@ -542,7 +542,7 @@ export function PaymentModal({ open, onClose, client: fixedClient, onDone }: { o
         )}
         <div className="grid grid-cols-[1fr_110px] gap-3">
           <Field label="Сумма">
-            <input className="field num text-[15px]" inputMode="decimal" value={amount} onChange={(e) => setAmount(e.target.value)} />
+            <input className="field num text-[14px]" inputMode="decimal" value={amount} onChange={(e) => setAmount(e.target.value)} />
           </Field>
           <Field label="Валюта">
             <select className="field" value={currency} onChange={(e) => setCurrency(e.target.value)}>
@@ -555,7 +555,7 @@ export function PaymentModal({ open, onClose, client: fixedClient, onDone }: { o
         <Field label="Способ оплаты">
           <div className="flex flex-wrap gap-1.5">
             {Object.entries(PAYMENT_METHODS).map(([k, v]) => (
-              <button key={k} type="button" onClick={() => setMethod(k)} className={clsx('h-8 rounded-full border px-3 text-[12px]', method === k ? 'border-ink bg-ink text-white' : 'border-line-2 bg-white hover:bg-soft')}>
+              <button key={k} type="button" onClick={() => setMethod(k)} className={clsx('h-8 rounded-full border px-3 text-[11.5px]', method === k ? 'border-ink bg-ink text-white' : 'border-line-2 bg-white hover:bg-soft')}>
                 {v}
               </button>
             ))}
@@ -705,9 +705,9 @@ export function NewShipmentModal({ open, onClose }: { open: boolean; onClose: ()
                 className={clsx('flex items-center gap-3 rounded-xl border px-3 py-2 text-left', r.id === routeId ? 'border-accent bg-accent-50/60' : 'border-line hover:bg-soft')}
               >
                 <Route size={15} className={r.id === routeId ? 'text-accent' : 'text-muted'} />
-                <span className="text-[12.5px] font-medium">{r.name}</span>
-                <span className="text-[11.5px] text-muted">{r.via}</span>
-                <span className="num ml-auto text-[11.5px] text-muted">
+                <span className="text-[11.5px] font-medium">{r.name}</span>
+                <span className="text-[11px] text-muted">{r.via}</span>
+                <span className="num ml-auto text-[11px] text-muted">
                   {num(r.distanceKm)} км · {r.days} дн
                 </span>
               </button>

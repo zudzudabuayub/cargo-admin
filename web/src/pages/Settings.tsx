@@ -59,7 +59,7 @@ export default function Settings() {
       <PageHeader title="Настройки" sub="Компания, курсы валют, сотрудники и API для приложения клиентов" right={isAdmin && <Button variant="dark" onClick={save}>Сохранить</Button>} />
       <div className="grid gap-4 lg:grid-cols-2">
         <Card className="px-5 py-4">
-          <div className="mb-3 text-[13.5px] font-medium">Компания</div>
+          <div className="mb-3 text-[12.5px] font-medium">Компания</div>
           <div className="grid grid-cols-2 gap-3">
             <Field label="Название (бренд)">
               <input className="field" {...c('name')} />
@@ -88,7 +88,7 @@ export default function Settings() {
           </div>
         </Card>
         <Card className="px-5 py-4">
-          <div className="mb-3 text-[13.5px] font-medium">Курсы и хранение</div>
+          <div className="mb-3 text-[12.5px] font-medium">Курсы и хранение</div>
           <div className="grid grid-cols-2 gap-3">
             <Field label="1 USD = сомони">
               <input className="field num" {...r('usdToTjs')} />
@@ -109,8 +109,8 @@ export default function Settings() {
       <Card className="mt-4 overflow-hidden">
         <div className="flex items-center justify-between px-5 pb-2 pt-4">
           <div>
-            <div className="text-[13.5px] font-medium">Сотрудники</div>
-            <div className="text-[11.5px] text-muted">Роли: администратор, менеджер, склад (Китай/ТДЖ), бухгалтер</div>
+            <div className="text-[12.5px] font-medium">Сотрудники</div>
+            <div className="text-[11px] text-muted">Роли: администратор, менеджер, склад (Китай/ТДЖ), бухгалтер</div>
           </div>
           {isAdmin && (
             <Button size="sm" icon={<Plus size={13} />} onClick={() => setAddUser(true)}>
@@ -155,17 +155,17 @@ export default function Settings() {
             <Smartphone size={18} />
           </span>
           <div>
-            <div className="text-[13.5px] font-medium">API для приложения клиентов</div>
-            <div className="mt-0.5 max-w-[720px] text-[12px] leading-relaxed text-muted">
+            <div className="text-[12.5px] font-medium">API для приложения клиентов</div>
+            <div className="mt-0.5 max-w-[720px] text-[11.5px] leading-relaxed text-muted">
               Мобильное приложение (iOS / Android / PWA) работает с этим же сервером. Клиент входит по номеру телефона и SMS-коду, видит свой код и адрес склада в Китае, добавляет трек-номера заказов, следит за посылками и пишет в чат — сообщения появляются здесь, в разделе «Чаты». Подробно: <code className="rounded bg-soft px-1">docs/CLIENT_API.md</code>.
             </div>
           </div>
         </div>
         <div className="mt-4 overflow-hidden rounded-xl border border-line">
           {API_DOC.map(([m, path, desc]) => (
-            <div key={path + m} className="flex items-center gap-3 border-b border-line/70 px-3 py-2 text-[12px] last:border-0">
-              <span className={`w-12 shrink-0 rounded-md px-1.5 py-0.5 text-center text-[10.5px] font-bold ${m === 'GET' ? 'bg-ok-50 text-ok' : 'bg-accent-50 text-accent'}`}>{m}</span>
-              <code className="w-[300px] shrink-0 font-mono text-[11.5px]">{path}</code>
+            <div key={path + m} className="flex items-center gap-3 border-b border-line/70 px-3 py-2 text-[11.5px] last:border-0">
+              <span className={`w-12 shrink-0 rounded-md px-1.5 py-0.5 text-center text-[10px] font-bold ${m === 'GET' ? 'bg-ok-50 text-ok' : 'bg-accent-50 text-accent'}`}>{m}</span>
+              <code className="w-[300px] shrink-0 font-mono text-[11px]">{path}</code>
               <span className="text-muted">{desc}</span>
             </div>
           ))}
@@ -174,8 +174,8 @@ export default function Settings() {
 
       <Card id="audit" className="mt-4 overflow-hidden">
         <div className="px-5 pb-2 pt-4">
-          <div className="text-[13.5px] font-medium">Журнал действий</div>
-          <div className="text-[11.5px] text-muted">Кто, что и когда изменил — включая решения по рекомендациям ассистента</div>
+          <div className="text-[12.5px] font-medium">Журнал действий</div>
+          <div className="text-[11px] text-muted">Кто, что и когда изменил — включая решения по рекомендациям ассистента</div>
         </div>
         <div className="max-h-[420px] overflow-y-auto scroll-thin">
           <Table>
@@ -190,12 +190,12 @@ export default function Settings() {
             <tbody>
               {audit?.map((a) => (
                 <tr key={a.id}>
-                  <Td className="whitespace-nowrap text-[12px] text-ink-2">{dateTime(a.createdAt)}</Td>
+                  <Td className="whitespace-nowrap text-[11.5px] text-ink-2">{dateTime(a.createdAt)}</Td>
                   <Td>{a.userName}</Td>
                   <Td>
-                    <code className="rounded bg-soft px-1.5 py-0.5 text-[11px]">{a.action}</code>
+                    <code className="rounded bg-soft px-1.5 py-0.5 text-[10.5px]">{a.action}</code>
                   </Td>
-                  <Td className="max-w-[420px] truncate text-[11.5px] text-muted">{a.details ?? '—'}</Td>
+                  <Td className="max-w-[420px] truncate text-[11px] text-muted">{a.details ?? '—'}</Td>
                 </tr>
               ))}
             </tbody>

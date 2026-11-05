@@ -80,7 +80,7 @@ export default function Shipments() {
                         <span className="font-semibold">{s.code}</span>
                         {s.transport === 'air' && <Plane size={13} className="text-accent" />}
                       </div>
-                      <div className="text-[11.5px] text-muted">
+                      <div className="text-[11px] text-muted">
                         {s.route.name} · {s.route.via}
                       </div>
                     </Td>
@@ -99,39 +99,39 @@ export default function Shipments() {
                         <div className="flex items-center gap-2">
                           <Avatar name={s.driver.name} color={s.driver.color} size={26} />
                           <div>
-                            <div className="text-[12px] font-medium">{s.driver.name}</div>
-                            <div className="text-[11px] text-muted">
+                            <div className="text-[11.5px] font-medium">{s.driver.name}</div>
+                            <div className="text-[10.5px] text-muted">
                               {s.truck?.model} · {s.truck?.plate}
                             </div>
                           </div>
                         </div>
                       ) : s.transport === 'air' ? (
-                        <span className="text-[12px] text-muted">Авиа · Урумчи — Душанбе</span>
+                        <span className="text-[11.5px] text-muted">Авиа · Урумчи — Душанбе</span>
                       ) : (
                         <Badge tone="amber">Нет трака</Badge>
                       )}
                     </Td>
                     <Td>
                       <Progress value={s.progress} tone={s.risk === 'delayed' ? 'red' : s.status === 'completed' || s.status === 'arrived' ? 'dark' : 'purple'} />
-                      <div className="mt-1 flex justify-between text-[11px] text-muted">
+                      <div className="mt-1 flex justify-between text-[10.5px] text-muted">
                         <span>{s.status === 'arrived' || s.status === 'completed' ? s.dest?.name : s.nextStop ? `след.: ${s.nextStop.kind === 'border' ? 'КПП ' : ''}${s.nextStop.name}` : s.origin?.name}</span>
                         <span className="num">{Math.round(s.progress * 100)}%</span>
                       </div>
                     </Td>
                     <Td>
-                      <div className="num text-[12px] font-medium">
+                      <div className="num text-[11.5px] font-medium">
                         {kg(s.load.kg)}
                         {s.truck && <span className="font-normal text-muted"> / {kg(s.truck.capacityKg)}</span>}
                       </div>
                       {s.truck && <Progress value={fill} tone="dark" className="mt-1 w-24" height={3} />}
                     </Td>
                     <Td>
-                      <div className="num text-[12px] font-medium">{num(s.load.n)}</div>
-                      <div className="text-[11px] text-muted">{s.load.clients} клиентов</div>
+                      <div className="num text-[11.5px] font-medium">{num(s.load.n)}</div>
+                      <div className="text-[10.5px] text-muted">{s.load.clients} клиентов</div>
                     </Td>
                     <Td className="text-right">
-                      <div className={clsx('num text-[12.5px] font-medium', late > 2 && !['arrived', 'completed'].includes(s.status) && 'text-danger')}>{day(s.arrivedAt ?? s.etaAt)}</div>
-                      <div className="text-[11px] text-muted">
+                      <div className={clsx('num text-[11.5px] font-medium', late > 2 && !['arrived', 'completed'].includes(s.status) && 'text-danger')}>{day(s.arrivedAt ?? s.etaAt)}</div>
+                      <div className="text-[10.5px] text-muted">
                         {s.arrivedAt ? 'прибыл' : s.status === 'loading' || s.status === 'planned' ? `отправка ${day(s.plannedDeparture)}` : late > 2 ? `+${hoursLabel(late)} к плану` : until(s.etaAt)}
                       </div>
                     </Td>

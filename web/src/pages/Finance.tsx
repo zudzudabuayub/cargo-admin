@@ -77,9 +77,9 @@ function RevenueChart({ weeks }: { weeks: { wk: string; s: number; n: number }[]
         <line x1={pad.l} x2={W - pad.r} y1={H - pad.b} y2={H - pad.b} stroke="#D9D9D5" strokeWidth={1} />
       </svg>
       {hover != null && (
-        <div className="pointer-events-none absolute top-0 rounded-xl bg-white px-3 py-2 text-[11.5px] shadow-pop" style={{ left: `${((44 + ((640 - 52) / weeks.length) * (hover + 0.5)) / 640) * 100}%`, transform: 'translateX(-50%)' }}>
+        <div className="pointer-events-none absolute top-0 rounded-xl bg-white px-3 py-2 text-[11px] shadow-pop" style={{ left: `${((44 + ((640 - 52) / weeks.length) * (hover + 0.5)) / 640) * 100}%`, transform: 'translateX(-50%)' }}>
           <div className="text-muted">Неделя с {day(weekStart(weeks[hover].wk).toISOString())}</div>
-          <div className="num text-[13px] font-medium">{money(weeks[hover].s, 0)}</div>
+          <div className="num text-[12px] font-medium">{money(weeks[hover].s, 0)}</div>
           <div className="text-muted">{weeks[hover].n} платежей</div>
         </div>
       )}
@@ -115,8 +115,8 @@ export default function Finance() {
         <Card className="px-5 pb-4 pt-4">
           <div className="mb-2 flex items-start justify-between">
             <div>
-              <div className="text-[13.5px] font-medium">Поступления по неделям, USD</div>
-              <div className="text-[11.5px] text-muted">Все способы оплаты, пересчёт TJS и CNY по курсу</div>
+              <div className="text-[12.5px] font-medium">Поступления по неделям, USD</div>
+              <div className="text-[11px] text-muted">Все способы оплаты, пересчёт TJS и CNY по курсу</div>
             </div>
             <Segmented
               size="sm"
@@ -152,12 +152,12 @@ export default function Finance() {
           )}
         </Card>
         <Card className="px-5 py-4">
-          <div className="text-[13.5px] font-medium">Способы оплаты</div>
-          <div className="text-[11.5px] text-muted">за 8 недель</div>
+          <div className="text-[12.5px] font-medium">Способы оплаты</div>
+          <div className="text-[11px] text-muted">за 8 недель</div>
           <div className="mt-4 space-y-3">
             {data.byMethod.map((m: any) => (
               <div key={m.method}>
-                <div className="flex justify-between text-[12px]">
+                <div className="flex justify-between text-[11.5px]">
                   <span>{PAYMENT_METHODS[m.method] ?? m.method}</span>
                   <span className="num font-medium">
                     {money(m.s, 0)} <span className="font-normal text-muted">· {m.n}</span>
@@ -175,8 +175,8 @@ export default function Finance() {
         <Card className="self-start overflow-hidden">
           <div className="flex items-center justify-between px-5 pb-2 pt-4">
             <div>
-              <div className="text-[13.5px] font-medium">Должники</div>
-              <div className="text-[11.5px] text-muted">посылки выданы или ждут выдачи, оплата не получена</div>
+              <div className="text-[12.5px] font-medium">Должники</div>
+              <div className="text-[11px] text-muted">посылки выданы или ждут выдачи, оплата не получена</div>
             </div>
             <Button
               size="sm"
@@ -195,12 +195,12 @@ export default function Finance() {
               <div key={d.id} className="flex items-center gap-2.5 border-t border-line/70 px-5 py-2">
                 <Avatar name={d.name} color={d.color} size={28} />
                 <Link to={`/clients/${d.id}`} className="min-w-0 flex-1">
-                  <div className="truncate text-[12.5px] font-medium hover:text-accent">{d.name}</div>
-                  <div className="text-[11px] text-muted">
+                  <div className="truncate text-[11.5px] font-medium hover:text-accent">{d.name}</div>
+                  <div className="text-[10.5px] text-muted">
                     {d.code} · {d.phone}
                   </div>
                 </Link>
-                <span className="num text-[12.5px] font-medium text-danger">{money(d.balance)}</span>
+                <span className="num text-[11.5px] font-medium text-danger">{money(d.balance)}</span>
                 <Button size="sm" onClick={() => setPay(d)}>
                   Оплата
                 </Button>
@@ -209,7 +209,7 @@ export default function Finance() {
           </div>
         </Card>
         <Card className="overflow-hidden">
-          <div className="px-5 pb-2 pt-4 text-[13.5px] font-medium">Последние платежи</div>
+          <div className="px-5 pb-2 pt-4 text-[12.5px] font-medium">Последние платежи</div>
           <div className="max-h-[520px] overflow-y-auto scroll-thin">
             <Table>
               <thead>
@@ -225,20 +225,20 @@ export default function Finance() {
               <tbody>
                 {data.payments.map((p: any) => (
                   <tr key={p.id} className="hover:bg-soft/70">
-                    <Td className="text-[12px] text-ink-2">{dateTime(p.createdAt)}</Td>
+                    <Td className="text-[11.5px] text-ink-2">{dateTime(p.createdAt)}</Td>
                     <Td>
                       <Link to={`/clients/${p.clientId}`} className="flex items-center gap-2">
                         <Avatar name={p.clientName} color={p.clientColor} size={22} />
                         <span className="font-medium">{p.clientName}</span>
-                        <span className="text-[11px] text-accent">{p.clientCode}</span>
+                        <span className="text-[10.5px] text-accent">{p.clientCode}</span>
                       </Link>
                     </Td>
                     <Td>{PAYMENT_METHODS[p.method] ?? p.method}</Td>
                     <Td className="max-w-[200px] truncate text-muted">{p.note ?? '—'}</Td>
-                    <Td className="text-[12px] text-muted">{p.userName ?? '—'}</Td>
+                    <Td className="text-[11.5px] text-muted">{p.userName ?? '—'}</Td>
                     <Td className={clsx('num text-right font-medium')}>
                       {num(p.amount, 2)} {p.currency}
-                      {p.currency !== 'USD' && <div className="text-[10.5px] font-normal text-muted">{money(p.amountUsd)}</div>}
+                      {p.currency !== 'USD' && <div className="text-[10px] font-normal text-muted">{money(p.amountUsd)}</div>}
                     </Td>
                   </tr>
                 ))}

@@ -7,6 +7,8 @@ import PublicTrack from './pages/PublicTrack';
 
 const Dashboard = lazy(() => import('./pages/Dashboard'));
 const Shipments = lazy(() => import('./pages/Shipments'));
+const Dispatch = lazy(() => import('./pages/Dispatch'));
+const Agents = lazy(() => import('./pages/Agents'));
 const ShipmentDetail = lazy(() => import('./pages/ShipmentDetail'));
 const Tracking = lazy(() => import('./pages/Tracking'));
 const Parcels = lazy(() => import('./pages/Parcels'));
@@ -46,6 +48,8 @@ export default function App() {
           }
         >
           <Route index element={<Dashboard />} />
+          <Route path="dispatch" element={<Dispatch />} />
+          <Route path="agents" element={<Agents />} />
           <Route path="shipments" element={<Shipments />} />
           <Route path="shipments/:id" element={<ShipmentDetail />} />
           <Route path="tracking" element={<Tracking />} />

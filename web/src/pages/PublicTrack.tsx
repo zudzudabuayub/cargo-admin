@@ -42,10 +42,10 @@ export default function PublicTrack() {
             <span className="grid h-8 w-8 place-items-center rounded-lg bg-ink text-white">
               <Boxes size={16} />
             </span>
-            <span className="text-[14px] font-semibold">{data?.company?.name ?? 'Cargo'}</span>
+            <span className="text-[13px] font-semibold">{data?.company?.name ?? 'Cargo'}</span>
           </div>
           {data?.company?.phone && (
-            <a href={`tel:${data.company.phone.replace(/\s/g, '')}`} className="flex items-center gap-1.5 text-[12px] text-ink-2">
+            <a href={`tel:${data.company.phone.replace(/\s/g, '')}`} className="flex items-center gap-1.5 text-[11.5px] text-ink-2">
               <Phone size={13} /> {data.company.phone}
             </a>
           )}
@@ -58,26 +58,26 @@ export default function PublicTrack() {
           className="relative mb-5"
         >
           <Search size={15} className="absolute left-4 top-1/2 -translate-y-1/2 text-muted" />
-          <input className="field h-11 rounded-full pl-10 text-[14px]" placeholder="Введите трек-номер посылки" value={q} onChange={(e) => setQ(e.target.value)} />
+          <input className="field h-11 rounded-full pl-10 text-[13px]" placeholder="Введите трек-номер посылки" value={q} onChange={(e) => setQ(e.target.value)} />
         </form>
-        {error && <div className="card p-8 text-center text-[13px] text-muted">Отправление не найдено. Проверьте трек-номер или ссылку.</div>}
+        {error && <div className="card p-8 text-center text-[12px] text-muted">Отправление не найдено. Проверьте трек-номер или ссылку.</div>}
         {!data && !error && <div className="skeleton h-[400px]" />}
         {p && (
           <div className="card mb-4 px-5 py-4">
             <div className="label">Посылка</div>
-            <div className="mt-1 font-mono text-[18px]">{p.trackNumber}</div>
+            <div className="mt-1 font-mono text-[16px]">{p.trackNumber}</div>
             <div className="mt-2 flex flex-wrap items-center gap-2">
               <Badge tone={PARCEL_STATUS[p.status].tone}>{p.statusLabel}</Badge>
-              <span className="text-[12px] text-muted">
+              <span className="text-[11.5px] text-muted">
                 {p.places} мест{p.weightKg ? ` · ${kg(p.weightKg)}` : ''} · пункт выдачи: {p.dest}
               </span>
             </div>
             {p.destAddress && (
-              <div className="mt-3 flex gap-2 rounded-xl bg-ok-50 px-3 py-2.5 text-[12.5px] text-ok">
+              <div className="mt-3 flex gap-2 rounded-xl bg-ok-50 px-3 py-2.5 text-[11.5px] text-ok">
                 <MapPin size={15} className="mt-0.5 shrink-0" />
                 <div>
                   <b>Готова к выдаче:</b> {p.destAddress}
-                  <div className="text-[11.5px]">{p.destHours}</div>
+                  <div className="text-[11px]">{p.destHours}</div>
                 </div>
               </div>
             )}
@@ -86,8 +86,8 @@ export default function PublicTrack() {
                 <div key={i} className="flex gap-3">
                   <span className={clsx('mt-1.5 h-2 w-2 shrink-0 rounded-full', i === 0 ? 'bg-accent' : 'bg-[#CFCFCA]')} />
                   <div>
-                    <div className={clsx('text-[12.5px]', i === 0 && 'font-medium')}>{e.note}</div>
-                    <div className="text-[11px] text-muted">{dateTime(e.at)}</div>
+                    <div className={clsx('text-[11.5px]', i === 0 && 'font-medium')}>{e.note}</div>
+                    <div className="text-[10.5px] text-muted">{dateTime(e.at)}</div>
                   </div>
                 </div>
               ))}
@@ -100,22 +100,22 @@ export default function PublicTrack() {
               <div className="flex flex-wrap items-start justify-between gap-3">
                 <div>
                   <div className="label">Рейс {s.code}</div>
-                  <div className="h-display mt-1 text-[22px]">
+                  <div className="h-display mt-1 text-[19px]">
                     {s.route.name}
                   </div>
-                  <div className="text-[12px] text-muted">{s.route.via}</div>
+                  <div className="text-[11.5px] text-muted">{s.route.via}</div>
                 </div>
                 <div className="text-right">
                   <div className="label">{s.arrivedAt ? 'Прибыл' : 'Ожидаемое прибытие'}</div>
-                  <div className={clsx('h-display num mt-1 text-[26px]', late > 2 && !s.arrivedAt ? 'text-danger' : 'text-accent')}>{day(s.arrivedAt ?? s.etaAt)}</div>
-                  <div className="text-[11.5px] text-muted">около {time(s.arrivedAt ?? s.etaAt)}</div>
+                  <div className={clsx('h-display num mt-1 text-[22px]', late > 2 && !s.arrivedAt ? 'text-danger' : 'text-accent')}>{day(s.arrivedAt ?? s.etaAt)}</div>
+                  <div className="text-[11px] text-muted">около {time(s.arrivedAt ?? s.etaAt)}</div>
                 </div>
               </div>
               <div className="mt-2 flex flex-wrap gap-2">
                 <Badge tone={SHIPMENT_STATUS[s.status].tone}>{s.statusLabel}</Badge>
                 {s.delayReason && <Badge tone="amber">{s.delayReason}</Badge>}
                 {s.cargo && (
-                  <span className="text-[12px] text-muted">
+                  <span className="text-[11.5px] text-muted">
                     {num(s.cargo.places)} мест · {kg(s.cargo.kg)}
                   </span>
                 )}
@@ -128,7 +128,7 @@ export default function PublicTrack() {
               </div>
             )}
             {s.driver && (
-              <div className="border-t border-line px-5 py-3 text-[12.5px]">
+              <div className="border-t border-line px-5 py-3 text-[11.5px]">
                 Водитель: <b className="font-medium">{s.driver.name}</b> · {s.driver.phone}
               </div>
             )}
@@ -136,7 +136,7 @@ export default function PublicTrack() {
               <div className="label mb-2">События</div>
               <div className="space-y-2">
                 {s.events.slice(0, 8).map((e: any, i: number) => (
-                  <div key={i} className="flex justify-between gap-3 text-[12.5px]">
+                  <div key={i} className="flex justify-between gap-3 text-[11.5px]">
                     <span className={clsx(i === 0 && 'font-medium')}>
                       {e.title}
                       {e.city && !e.title.includes(e.city) ? ` · ${e.city}` : ''}
@@ -148,7 +148,7 @@ export default function PublicTrack() {
             </div>
           </div>
         )}
-        <div className="mt-6 text-center text-[11px] text-muted">Обновляется автоматически каждые 30 секунд</div>
+        <div className="mt-6 text-center text-[10.5px] text-muted">Обновляется автоматически каждые 30 секунд</div>
       </div>
     </div>
   );

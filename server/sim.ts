@@ -4,6 +4,7 @@ import { all, insert, nowIso, update } from './db.js';
 import { getRoute, notify } from './domain.js';
 import { pointAt } from './geo.js';
 import { publish } from './realtime.js';
+import { autoRun } from './agents.js';
 
 const TICK_MS = 30_000;
 const lastTick = new Map<number, number>();
@@ -73,6 +74,7 @@ export function startSimulation() {
   return setInterval(() => {
     try {
       simulateTick();
+      autoRun();
     } catch (e) {
       console.error('[sim]', e);
     }

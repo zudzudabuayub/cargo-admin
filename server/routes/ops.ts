@@ -18,13 +18,49 @@ import {
   token,
   type ShipmentStatus,
 } from '../domain.js';
-import { applyReroute, buildBrief, executeAction, rerouteOption } from '../assistant.js';
+import { applyReroute, buildBrief, dismissAction, executeAction, rerouteOption } from '../assistant.js';
+import { agentsOverview, isPaused, setAutonomy, setPaused } from '../agents.js';
 import { CITIES } from '../geo.js';
-import { actorOf, bad, h, int, notFound, str } from '../http.js';
+import { actorOf, bad, h, int, notFound, requireRole, str } from '../http.js';
 
 const r = Router();
 const ACTIVE = `('in_transit','border','customs')`;
 const DAY = 86400000;
+
+
+function liveData() {
+  return all<any>(`SELECT * FROM shipments WHERE status IN ${ACTIVE}`).map((s) => {
+    const v = shipmentView(s, { withPath: true });
+    return { id: v.id, code: v.code, risk: v.risk, status: v.status, position: v.position, progress: v.progress, path: v.route.path, transport: v.transport, speed: v.speed };
+  });
+}
+
+function timelineData() {
+  // График рейсов (Gantt): 10 дней назад — 14 вперёд
+  const from = new Date(Date.now() - 10 * DAY).toISOString();
+  return all<any>(
+    `SELECT s.*, t.plate, t.model, d.name driverName, d.color driverColor FROM shipments s
+     LEFT JOIN trucks t ON t.id = s.truckId LEFT JOIN drivers d ON d.id = s.driverId
+     WHERE s.status != 'completed' OR s.arrivedAt >= ? ORDER BY COALESCE(s.departedAt, s.plannedDeparture)`,
+    from,
+  ).map((s) => ({
+    id: s.id,
+    code: s.code,
+    status: s.status,
+    risk: s.risk,
+    transport: s.transport,
+    plate: s.plate,
+    model: s.model,
+    driverName: s.driverName,
+    driverColor: s.driverColor,
+    start: s.departedAt ?? s.plannedDeparture,
+    plannedEnd: s.plannedArrival,
+    end: s.arrivedAt ?? s.etaAt,
+    route: getRoute(s.routeId).row.name,
+  }));
+}
+
+const warehousesGeo = () => all(`SELECT w.id, w.code, w.name, w.country, w.role, w.address, c.lat, c.lng FROM warehouses w JOIN cities c ON c.id = w.cityId`);
 
 // ---------- Дашборд ----------
 r.get(
@@ -55,34 +91,8 @@ r.get(
       get<any>(`SELECT * FROM shipments WHERE status IN ${ACTIVE} ORDER BY etaAt LIMIT 1`);
     const featured = featuredRow ? { ...shipmentView(featuredRow, { withPath: true }), reroute: rerouteOption(featuredRow) } : null;
 
-    // Мини-карта
-    const live = all<any>(`SELECT * FROM shipments WHERE status IN ${ACTIVE}`).map((s) => {
-      const v = shipmentView(s, { withPath: true });
-      return { id: v.id, code: v.code, risk: v.risk, status: v.status, position: v.position, progress: v.progress, path: v.route.path, transport: v.transport };
-    });
-
-    // График рейсов (Gantt): 10 дней назад — 14 вперёд
-    const from = new Date(now - 10 * DAY).toISOString();
-    const timeline = all<any>(
-      `SELECT s.*, t.plate, t.model, d.name driverName, d.color driverColor FROM shipments s
-       LEFT JOIN trucks t ON t.id = s.truckId LEFT JOIN drivers d ON d.id = s.driverId
-       WHERE s.status != 'completed' OR s.arrivedAt >= ? ORDER BY COALESCE(s.departedAt, s.plannedDeparture)`,
-      from,
-    ).map((s) => ({
-      id: s.id,
-      code: s.code,
-      status: s.status,
-      risk: s.risk,
-      transport: s.transport,
-      plate: s.plate,
-      model: s.model,
-      driverName: s.driverName,
-      driverColor: s.driverColor,
-      start: s.departedAt ?? s.plannedDeparture,
-      plannedEnd: s.plannedArrival,
-      end: s.arrivedAt ?? s.etaAt,
-      route: getRoute(s.routeId).row.name,
-    }));
+    const live = liveData();
+    const timeline = timelineData();
 
     return {
       kpi: {
@@ -102,14 +112,85 @@ r.get(
       brief: buildBrief(),
       live,
       timeline,
-      warehouses: all(`SELECT w.id, w.code, w.name, w.country, w.role, c.lat, c.lng FROM warehouses w JOIN cities c ON c.id = w.cityId`),
+      warehouses: warehousesGeo(),
     };
   }),
 );
 
-// ---------- Ассистент ----------
+// ---------- Ассистент и агенты ----------
 r.get('/assistant/brief', h(() => buildBrief()));
 r.post('/assistant/actions/:kind', h((req) => executeAction(req.params.kind, req.body ?? {}, actorOf(req))));
+r.post(
+  '/assistant/dismiss',
+  h((req) => {
+    const key = str(req.body?.key);
+    if (!key) throw bad('Не указано действие');
+    dismissAction(key, actorOf(req));
+    return { ok: true };
+  }),
+);
+r.get('/agents', h(() => agentsOverview()));
+r.put('/agents/autonomy', requireRole('admin', 'manager'), h((req) => ({ autonomy: setAutonomy(req.body ?? {}, actorOf(req)) })));
+r.post('/agents/pause', requireRole('admin', 'manager'), h((req) => ({ paused: setPaused(!!req.body?.paused, actorOf(req)) })));
+
+// ---------- Диспетчерская ----------
+r.get(
+  '/dispatch',
+  h(() => {
+    const brief = buildBrief();
+    const pendingShip = new Set<number>(brief.actions.flatMap((a: any) => [a.shipmentId, ...(a.shipmentIds ?? [])]).filter(Boolean));
+    const queue = all<any>(
+      `SELECT * FROM shipments WHERE status IN ('planned','loading','in_transit','border','customs')
+       ORDER BY risk = 'delayed' DESC, risk = 'risk' DESC, CASE status WHEN 'loading' THEN 0 WHEN 'planned' THEN 1 ELSE 2 END, etaAt`,
+    ).map((s) => {
+      const v = shipmentView(s);
+      const top = get<any>(
+        `SELECT c.id, c.name, c.company, c.color, ROUND(SUM(p.weightKg)) kg FROM parcels p JOIN clients c ON c.id = p.clientId
+         WHERE p.shipmentId = ? GROUP BY c.id ORDER BY kg DESC LIMIT 1`,
+        s.id,
+      );
+      const fill = v.truck ? v.load.kg / (v.truck as any).capacityKg : null;
+      const priority = s.risk === 'delayed' || (!s.truckId && s.transport === 'auto') ? 'high' : s.risk === 'risk' || (fill != null && fill < 0.5 && s.status === 'loading') ? 'medium' : 'low';
+      return {
+        id: s.id,
+        code: s.code,
+        status: s.status,
+        statusLabel: SHIPMENT_STATUS[s.status as ShipmentStatus],
+        risk: s.risk,
+        delayReason: s.delayReason,
+        transport: s.transport,
+        route: { name: v.route.name, via: v.route.via },
+        from: { name: v.origin?.name, at: s.departedAt ?? s.plannedDeparture },
+        to: { name: v.dest?.name, at: s.etaAt, planned: s.plannedArrival },
+        driver: v.driver ? { name: (v.driver as any).name, color: (v.driver as any).color } : null,
+        truck: v.truck ? { plate: (v.truck as any).plate, capacityKg: (v.truck as any).capacityKg } : null,
+        load: v.load,
+        fill,
+        topClient: top,
+        priority,
+        needsDecision: pendingShip.has(s.id) || !s.truckId,
+      };
+    });
+    const autoHandled = all<any>(
+      `SELECT * FROM audit_log WHERE userId IS NULL AND (action LIKE 'auto.%' OR action LIKE 'assistant.%') ORDER BY createdAt DESC LIMIT 8`,
+    );
+    return {
+      queue,
+      counts: {
+        all: queue.length,
+        risk: queue.filter((q) => q.risk !== 'ok' && ['in_transit', 'border', 'customs'].includes(q.status)).length,
+        priority: queue.filter((q) => q.priority === 'high').length,
+        decisions: queue.filter((q) => q.needsDecision).length,
+      },
+      live: liveData(),
+      timeline: timelineData(),
+      warehouses: warehousesGeo(),
+      brief,
+      autoHandled,
+      paused: isPaused(),
+    };
+  }),
+);
 
 // ---------- Справочники ----------
 r.get('/cities', h(() => all('SELECT * FROM cities ORDER BY country, name')));

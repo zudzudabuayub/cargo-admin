@@ -76,7 +76,7 @@ export default function Clients() {
                           {c.status === 'vip' && <Badge tone="lime">VIP</Badge>}
                           {c.status === 'blocked' && <Badge tone="red">Блок</Badge>}
                         </div>
-                        <div className="text-[11px]">
+                        <div className="text-[10.5px]">
                           <span className="font-medium text-accent">{c.code}</span>
                           {c.company && <span className="text-muted"> · {c.company}</span>}
                         </div>
@@ -84,21 +84,21 @@ export default function Clients() {
                     </div>
                   </Td>
                   <Td>
-                    <div className="num text-[12px]">{c.phone}</div>
-                    <div className="text-[11px] text-muted">{c.telegram ?? c.email ?? '—'}</div>
+                    <div className="num text-[11.5px]">{c.phone}</div>
+                    <div className="text-[10.5px] text-muted">{c.telegram ?? c.email ?? '—'}</div>
                   </Td>
-                  <Td className="text-[12px] text-ink-2">{c.warehouseName}</Td>
+                  <Td className="text-[11.5px] text-ink-2">{c.warehouseName}</Td>
                   <Td className="num text-right">
                     {c.parcelsActive}
-                    {c.parcelsReady > 0 && <div className="text-[10.5px] text-ok">{c.parcelsReady} к выдаче</div>}
+                    {c.parcelsReady > 0 && <div className="text-[10px] text-ok">{c.parcelsReady} к выдаче</div>}
                   </Td>
                   <Td className="num text-right">
                     {c.parcelsTotal}
-                    <div className="text-[10.5px] text-muted">{kg(c.kgTotal)}</div>
+                    <div className="text-[10px] text-muted">{kg(c.kgTotal)}</div>
                   </Td>
                   <Td className={clsx('num text-right font-medium', c.balance < -0.5 ? 'text-danger' : c.balance > 0.5 ? 'text-ok' : 'text-muted')}>{money(c.balance)}</Td>
-                  <Td className="text-[12px] text-muted">{c.source}</Td>
-                  <Td className="text-right text-[11px] text-muted">{ago(c.lastParcelAt ?? c.createdAt)}</Td>
+                  <Td className="text-[11.5px] text-muted">{c.source}</Td>
+                  <Td className="text-right text-[10.5px] text-muted">{ago(c.lastParcelAt ?? c.createdAt)}</Td>
                 </tr>
               ))}
             </tbody>

@@ -54,12 +54,12 @@ export default function Tracking() {
     <div className="mx-auto max-w-[1600px]">
       <div className="mb-4 flex flex-wrap items-end justify-between gap-3">
         <div>
-          <h1 className="h-display text-[30px] leading-tight">Live-трекинг</h1>
-          <div className="mt-1 text-[12.5px] text-muted">
+          <h1 className="h-display text-[26px] leading-tight">Live-трекинг</h1>
+          <div className="mt-1 text-[11.5px] text-muted">
             {moving.length} в пути · обновлено {Math.max(0, Math.round((Date.now() - lastUpdate) / 1000))} сек назад
           </div>
         </div>
-        <div className="flex items-center gap-3 text-[11.5px] text-muted">
+        <div className="flex items-center gap-3 text-[11px] text-muted">
           <span className="flex items-center gap-1.5">
             <span className="h-2.5 w-2.5 rounded-full bg-ink ring-2 ring-white" /> По графику
           </span>
@@ -86,8 +86,8 @@ export default function Tracking() {
       <div className="grid h-[calc(100vh-150px)] min-h-[620px] gap-3 lg:grid-cols-[300px_minmax(0,1fr)] xl:grid-cols-[300px_minmax(0,1fr)_330px]">
         <Card className="flex min-h-0 flex-col overflow-hidden">
           <div className="px-4 pb-2 pt-3">
-            <div className="text-[13px] font-medium">На трассе</div>
-            <div className="mb-2 text-[11px] text-muted">GPS каждые 30 сек</div>
+            <div className="text-[12px] font-medium">На трассе</div>
+            <div className="mb-2 text-[10.5px] text-muted">GPS каждые 30 сек</div>
             <Segmented
               size="sm"
               value={filter}
@@ -119,19 +119,19 @@ export default function Tracking() {
                       <Avatar name={s.driver?.name} color={s.driver?.color} size={28} />
                     )}
                     <div className="min-w-0 flex-1">
-                      <div className="truncate text-[12px] font-medium">{s.driver?.name ?? 'Авиа-партия'}</div>
-                      <div className="truncate text-[10.5px] text-muted">
+                      <div className="truncate text-[11.5px] font-medium">{s.driver?.name ?? 'Авиа-партия'}</div>
+                      <div className="truncate text-[10px] text-muted">
                         {s.truck?.plate ?? 'Урумчи — Душанбе'} · {s.code}
                       </div>
                     </div>
                     <div className="text-right">
-                      <div className="num text-[12px] font-medium">{s.speed ?? 0} км/ч</div>
-                      <div className={clsx('text-[10.5px]', s.risk === 'delayed' ? 'text-danger' : s.risk === 'risk' ? 'text-[#B26B00]' : 'text-ok')}>
+                      <div className="num text-[11.5px] font-medium">{s.speed ?? 0} км/ч</div>
+                      <div className={clsx('text-[10px]', s.risk === 'delayed' ? 'text-danger' : s.risk === 'risk' ? 'text-[#B26B00]' : 'text-ok')}>
                         {s.status === 'border' ? 'стоит на КПП' : s.status === 'customs' ? 'таможня' : late > 2 ? `+${hoursLabel(late)}` : 'по плану'}
                       </div>
                     </div>
                   </div>
-                  <div className="mt-2 flex items-center justify-between gap-2 text-[10.5px]">
+                  <div className="mt-2 flex items-center justify-between gap-2 text-[10px]">
                     <Badge tone={s.risk === 'ok' ? SHIPMENT_STATUS[s.status].tone : RISK[s.risk].tone} dot>
                       {s.risk === 'ok' ? SHIPMENT_STATUS[s.status].label : RISK[s.risk].label}
                     </Badge>
@@ -147,7 +147,7 @@ export default function Tracking() {
               <div className="px-2 pb-1 pt-3">
                 <div className="label mb-1.5">На стоянке · {data.idleTrucks.length}</div>
                 {data.idleTrucks.map((t: any) => (
-                  <div key={t.id} className="flex items-center justify-between py-1 text-[11.5px]">
+                  <div key={t.id} className="flex items-center justify-between py-1 text-[11px]">
                     <span className="text-ink-2">
                       {t.model} · {t.plate}
                     </span>
@@ -174,15 +174,15 @@ function TruckPanel({ s, onClose, nav }: { s: any; onClose: () => void; nav: (to
     <Card className="px-4 pb-4 pt-3">
       <div className="flex items-start justify-between">
         <div>
-          <div className="flex items-center gap-1.5 text-[10.5px] font-semibold uppercase tracking-[0.06em] text-ok">
+          <div className="flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-[0.06em] text-ok">
             <span className="relative flex h-2 w-2">
               <span className="pulse-ring absolute inset-0 rounded-full bg-ok" />
               <span className="relative h-2 w-2 rounded-full bg-ok" />
             </span>
             Live · {s.code} · {ago(s.truck?.lastSeenAt ?? new Date().toISOString())}
           </div>
-          <div className="h-display mt-1 text-[19px]">{s.transport === 'air' ? 'Авиа-партия' : `${s.truck?.model ?? '—'}`}</div>
-          <div className="text-[11.5px] text-muted">
+          <div className="h-display mt-1 text-[16.5px]">{s.transport === 'air' ? 'Авиа-партия' : `${s.truck?.model ?? '—'}`}</div>
+          <div className="text-[11px] text-muted">
             {s.truck ? `${s.truck.kind} · ${s.truck.plate}` : 'Урумчи → Душанбе'} · {s.route.name}
           </div>
         </div>
@@ -204,8 +204,8 @@ function TruckPanel({ s, onClose, nav }: { s: any; onClose: () => void; nav: (to
         <div className="mt-3 flex items-center gap-2.5">
           <Avatar name={s.driver.name} color={s.driver.color} size={34} />
           <div className="min-w-0 flex-1">
-            <div className="truncate text-[12.5px] font-medium">{s.driver.name}</div>
-            <div className="text-[11px] text-muted">
+            <div className="truncate text-[11.5px] font-medium">{s.driver.name}</div>
+            <div className="text-[10.5px] text-muted">
               Стаж {s.driver.experienceYears} лет · ★ {s.driver.rating}
             </div>
           </div>
@@ -230,7 +230,7 @@ function TruckPanel({ s, onClose, nav }: { s: any; onClose: () => void; nav: (to
         <Stat label="Осталось" value={`${num(s.remainingKm)} км`} sub={s.nextStop ? `→ ${s.nextStop.name}` : ''} />
       </div>
       <div className="mt-3">
-        <div className="flex justify-between text-[11px]">
+        <div className="flex justify-between text-[10.5px]">
           <span className="text-ink-2">
             {s.origin?.name} · {day(s.departedAt)}
           </span>
@@ -239,7 +239,7 @@ function TruckPanel({ s, onClose, nav }: { s: any; onClose: () => void; nav: (to
         <div className="mt-1.5 h-[4px] overflow-hidden rounded-full bg-[#EDEDEA]">
           <div className={clsx('h-full rounded-full', s.risk === 'delayed' ? 'bg-danger' : 'bg-accent')} style={{ width: `${s.progress * 100}%` }} />
         </div>
-        <div className="mt-1 flex justify-between text-[10.5px] text-muted">
+        <div className="mt-1 flex justify-between text-[10px] text-muted">
           <span>
             {num(s.route.distanceKm - s.remainingKm)} из {num(s.route.distanceKm)} км
           </span>
@@ -248,11 +248,11 @@ function TruckPanel({ s, onClose, nav }: { s: any; onClose: () => void; nav: (to
       </div>
       {s.risk !== 'ok' && (
         <div className="mt-3 rounded-xl bg-[#F3F0FF] px-3 py-2.5 ring-1 ring-accent-100">
-          <div className="flex items-center gap-1.5 text-[10.5px] font-semibold uppercase tracking-[0.06em] text-accent">
+          <div className="flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-[0.06em] text-accent">
             <Sparkles size={12} /> Ассистент · 92% уверенность
           </div>
-          <div className="mt-1 text-[12px] font-medium">{s.delayReason}</div>
-          <div className="mt-0.5 text-[11.5px] text-ink-2">
+          <div className="mt-1 text-[11.5px] font-medium">{s.delayReason}</div>
+          <div className="mt-0.5 text-[11px] text-ink-2">
             Прогноз: +{hoursLabel(late)} к сроку. Новый ETA {time(s.etaAt)}, {day(s.etaAt)}.
           </div>
         </div>

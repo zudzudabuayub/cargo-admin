@@ -50,17 +50,17 @@ export default function Fleet() {
                 <Badge tone={TRUCK_STATUS[t.status]?.tone} dot>
                   {TRUCK_STATUS[t.status]?.label}
                 </Badge>
-                <span className="text-[11px] text-muted">{t.lastSeenAt ? `GPS ${ago(t.lastSeenAt)}` : ''}</span>
+                <span className="text-[10.5px] text-muted">{t.lastSeenAt ? `GPS ${ago(t.lastSeenAt)}` : ''}</span>
               </div>
               <div className="my-1 rounded-xl bg-soft px-2 py-1">
                 <TruckArt className="w-full" kind={t.kind} />
               </div>
-              <div className="text-[14px] font-medium">{t.model}</div>
-              <div className="text-[11.5px] text-muted">
+              <div className="text-[13px] font-medium">{t.model}</div>
+              <div className="text-[11px] text-muted">
                 {t.plate}
                 {t.trailerPlate ? ` · прицеп ${t.trailerPlate}` : ''} · {t.year}
               </div>
-              <div className="mt-3 grid grid-cols-3 gap-2 text-[11px]">
+              <div className="mt-3 grid grid-cols-3 gap-2 text-[10.5px]">
                 <div>
                   <div className="label">Тип</div>
                   <div className="mt-0.5 font-medium">{t.kind}</div>
@@ -75,7 +75,7 @@ export default function Fleet() {
                 </div>
               </div>
               <div className="mt-3">
-                <div className="flex justify-between text-[11px]">
+                <div className="flex justify-between text-[10.5px]">
                   <span className="text-muted">Топливо</span>
                   <span className="num">{t.fuel}%</span>
                 </div>
@@ -86,12 +86,12 @@ export default function Fleet() {
                   <>
                     <Avatar name={t.driverName} color={t.driverColor} size={26} />
                     <div className="min-w-0 flex-1">
-                      <div className="truncate text-[12px] font-medium">{t.driverName}</div>
-                      <div className="num text-[10.5px] text-muted">{t.driverPhone}</div>
+                      <div className="truncate text-[11.5px] font-medium">{t.driverName}</div>
+                      <div className="num text-[10px] text-muted">{t.driverPhone}</div>
                     </div>
                   </>
                 ) : (
-                  <span className="flex-1 text-[12px] text-muted">Водитель не назначен</span>
+                  <span className="flex-1 text-[11.5px] text-muted">Водитель не назначен</span>
                 )}
                 {t.shipmentCode && (
                   <Link to={`/shipments/${t.shipmentId}`}>
@@ -101,7 +101,7 @@ export default function Fleet() {
               </div>
               <div className="mt-2 flex gap-1.5">
                 <select
-                  className="field h-8 flex-1 text-[12px]"
+                  className="field h-8 flex-1 text-[11.5px]"
                   value={t.status}
                   disabled={t.status === 'on_trip'}
                   onChange={async (e) => {
@@ -114,7 +114,7 @@ export default function Fleet() {
                   <option value="maintenance">На ремонте</option>
                   {t.status === 'on_trip' && <option value="on_trip">В рейсе</option>}
                 </select>
-                <span className="num self-center text-[11px] text-muted">{num(t.odometer)} км</span>
+                <span className="num self-center text-[10.5px] text-muted">{num(t.odometer)} км</span>
               </div>
             </Card>
           ))}
@@ -143,7 +143,7 @@ export default function Fleet() {
                       <Avatar name={d.name} color={d.color} size={30} />
                       <div>
                         <div className="font-medium">{d.name}</div>
-                        <div className="text-[11px] text-muted">
+                        <div className="text-[10.5px] text-muted">
                           {d.citizenship} · {d.license}
                         </div>
                       </div>
@@ -153,7 +153,7 @@ export default function Fleet() {
                   <Td>
                     <Badge tone={d.status === 'on_trip' ? 'purple' : d.status === 'off' ? 'gray' : 'green'}>{d.status === 'on_trip' ? 'В рейсе' : d.status === 'off' ? 'Выходной' : 'Свободен'}</Badge>
                   </Td>
-                  <Td className="text-[12px]">{d.plate ? `${d.model} · ${d.plate}` : <span className="text-muted">—</span>}</Td>
+                  <Td className="text-[11.5px]">{d.plate ? `${d.model} · ${d.plate}` : <span className="text-muted">—</span>}</Td>
                   <Td>
                     {d.shipmentCode ? (
                       <Link to={`/shipments/${d.shipmentId}`} className="font-medium text-accent">

@@ -163,13 +163,13 @@ export function ToastProvider({ children }: { children: ReactNode }) {
       {children}
       <div className="pointer-events-none fixed bottom-5 left-1/2 z-[2000] flex -translate-x-1/2 flex-col items-center gap-2">
         {items.map((t) => (
-          <div key={t.id} className="fade-up pointer-events-auto flex items-center gap-2.5 rounded-xl bg-ink px-4 py-2.5 text-[12.5px] text-white shadow-pop">
-            <span className={`grid h-5 w-5 place-items-center rounded-full text-[11px] ${t.tone === 'error' ? 'bg-danger' : t.tone === 'info' ? 'bg-accent' : 'bg-lime text-lime-ink'}`}>
+          <div key={t.id} className="fade-up pointer-events-auto flex items-center gap-2.5 rounded-xl bg-ink px-4 py-2.5 text-[11.5px] text-white shadow-pop">
+            <span className={`grid h-5 w-5 place-items-center rounded-full text-[10.5px] ${t.tone === 'error' ? 'bg-danger' : t.tone === 'info' ? 'bg-accent' : 'bg-lime text-lime-ink'}`}>
               {t.tone === 'error' ? '!' : t.tone === 'info' ? 'i' : '✓'}
             </span>
             <div>
               <div className="font-medium">{t.text}</div>
-              {t.sub && <div className="text-[11px] text-white/60">{t.sub}</div>}
+              {t.sub && <div className="text-[10.5px] text-white/60">{t.sub}</div>}
             </div>
           </div>
         ))}

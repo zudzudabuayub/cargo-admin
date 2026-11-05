@@ -36,12 +36,12 @@ export default function ClientDetail() {
               Клиенты / {c.type === 'business' ? 'Бизнес' : 'Физлицо'} / с {day(c.createdAt)}
             </div>
             <div className="flex items-center gap-2">
-              <h1 className="h-display text-[28px] leading-none">{c.name}</h1>
-              <span className="rounded-lg bg-accent-50 px-2 py-1 text-[13px] font-semibold text-accent">{c.code}</span>
+              <h1 className="h-display text-[24px] leading-none">{c.name}</h1>
+              <span className="rounded-lg bg-accent-50 px-2 py-1 text-[12px] font-semibold text-accent">{c.code}</span>
               {c.status === 'vip' && <Badge tone="lime">VIP</Badge>}
               {c.status === 'blocked' && <Badge tone="red">Заблокирован</Badge>}
             </div>
-            {c.company && <div className="mt-1 text-[12.5px] text-muted">{c.company}</div>}
+            {c.company && <div className="mt-1 text-[11.5px] text-muted">{c.company}</div>}
           </div>
         </div>
         <div className="flex gap-2">
@@ -63,24 +63,24 @@ export default function ClientDetail() {
             <div className="grid grid-cols-2 gap-3">
               <div>
                 <div className="label">Баланс</div>
-                <div className={clsx('h-display num mt-1 text-[26px]', c.balance < -0.5 ? 'text-danger' : 'text-ink')}>{money(c.balance)}</div>
+                <div className={clsx('h-display num mt-1 text-[22px]', c.balance < -0.5 ? 'text-danger' : 'text-ink')}>{money(c.balance)}</div>
               </div>
               <div>
                 <div className="label">Посылок</div>
-                <div className="h-display num mt-1 text-[26px]">{c.parcels.length}</div>
+                <div className="h-display num mt-1 text-[22px]">{c.parcels.length}</div>
               </div>
               <div>
                 <div className="label">Оплачено всего</div>
-                <div className="num mt-0.5 text-[13px] font-medium">{money(c.paid)}</div>
+                <div className="num mt-0.5 text-[12px] font-medium">{money(c.paid)}</div>
               </div>
               <div>
                 <div className="label">Привезли</div>
-                <div className="num mt-0.5 text-[13px] font-medium">{kg(c.parcels.reduce((a: number, p: any) => a + (p.weightKg || 0), 0))}</div>
+                <div className="num mt-0.5 text-[12px] font-medium">{kg(c.parcels.reduce((a: number, p: any) => a + (p.weightKg || 0), 0))}</div>
               </div>
             </div>
           </Card>
-          <Card className="space-y-3 px-5 py-4 text-[12.5px]">
-            <div className="text-[13.5px] font-medium">Контакты</div>
+          <Card className="space-y-3 px-5 py-4 text-[11.5px]">
+            <div className="text-[12.5px] font-medium">Контакты</div>
             <a href={`tel:${c.phone.replace(/\s/g, '')}`} className="flex items-center gap-2.5 hover:text-accent">
               <Phone size={14} className="text-muted" />
               <span className="num">{c.phone}</span>
@@ -112,7 +112,7 @@ export default function ClientDetail() {
             <div className="rounded-xl bg-soft px-3 py-2">
               <div className="label">Пункт выдачи</div>
               <div className="mt-0.5 font-medium">{c.warehouseName}</div>
-              <div className="text-[11.5px] text-muted">{c.warehouseAddress}</div>
+              <div className="text-[11px] text-muted">{c.warehouseAddress}</div>
             </div>
             {c.discount > 0 && (
               <div className="flex justify-between">
@@ -127,19 +127,19 @@ export default function ClientDetail() {
           </Card>
           <Card className="px-5 py-4">
             <div className="flex items-center justify-between">
-              <div className="text-[13.5px] font-medium">Адрес склада в Китае</div>
+              <div className="text-[12.5px] font-medium">Адрес склада в Китае</div>
               <CopyButton text={addr?.copyText ?? ''} />
             </div>
-            <div className="mt-1 text-[11.5px] text-muted">Клиент указывает его при заказе на Taobao, 1688, Pinduoduo</div>
+            <div className="mt-1 text-[11px] text-muted">Клиент указывает его при заказе на Taobao, 1688, Pinduoduo</div>
             <div className="mt-3 flex flex-wrap gap-1">
               {c.chinaAddresses.map((a: any, i: number) => (
-                <button key={a.warehouseId} onClick={() => setAddrIdx(i)} className={clsx('h-7 rounded-full px-2.5 text-[11.5px] font-medium', i === addrIdx ? 'bg-ink text-white' : 'bg-soft text-ink-2')}>
+                <button key={a.warehouseId} onClick={() => setAddrIdx(i)} className={clsx('h-7 rounded-full px-2.5 text-[11px] font-medium', i === addrIdx ? 'bg-ink text-white' : 'bg-soft text-ink-2')}>
                   {a.warehouse.replace('Склад ', '')}
                 </button>
               ))}
             </div>
             {addr && (
-              <div className="mt-3 space-y-2 rounded-xl bg-soft p-3 text-[12px]">
+              <div className="mt-3 space-y-2 rounded-xl bg-soft p-3 text-[11.5px]">
                 {[
                   ['收货人 Получатель', addr.receiver],
                   ['电话 Телефон', addr.phone],
@@ -151,7 +151,7 @@ export default function ClientDetail() {
                     <div className="mt-0.5 font-medium leading-snug">{v}</div>
                   </div>
                 ))}
-                <div className="border-t border-line pt-2 text-[11px] text-muted">{addr.addressRu}</div>
+                <div className="border-t border-line pt-2 text-[10.5px] text-muted">{addr.addressRu}</div>
               </div>
             )}
           </Card>
@@ -199,19 +199,19 @@ export default function ClientDetail() {
                 <tbody>
                   {c.parcels.map((p: any) => (
                     <tr key={p.id} className="hover:bg-soft/70">
-                      <Td className="font-mono text-[11.5px]">
+                      <Td className="font-mono text-[11px]">
                         <Link to={`/parcels?open=${p.id}`} className="hover:text-accent">
                           {p.trackNumber}
                         </Link>
                       </Td>
                       <Td>
                         <div className="text-ink-2">{p.description ?? '—'}</div>
-                        <div className="text-[10.5px] text-muted">{CATEGORY[p.category]}</div>
+                        <div className="text-[10px] text-muted">{CATEGORY[p.category]}</div>
                       </Td>
                       <Td>
                         <Badge tone={PARCEL_STATUS[p.status].tone}>{PARCEL_STATUS[p.status].label}</Badge>
                       </Td>
-                      <Td className="text-[12px]">
+                      <Td className="text-[11.5px]">
                         {p.shipmentCode ? (
                           <Link to={`/shipments/${p.shipmentId}`} className="font-medium text-accent">
                             {p.shipmentCode}
@@ -224,7 +224,7 @@ export default function ClientDetail() {
                       <Td className="num text-right">
                         {money(p.price)} {p.paid ? <span className="text-ok">✓</span> : null}
                       </Td>
-                      <Td className="text-right text-[11px] text-muted">{day(p.createdAt)}</Td>
+                      <Td className="text-right text-[10.5px] text-muted">{day(p.createdAt)}</Td>
                     </tr>
                   ))}
                 </tbody>
@@ -244,7 +244,7 @@ export default function ClientDetail() {
               <tbody>
                 {c.payments.map((p: any) => (
                   <tr key={p.id}>
-                    <Td className="text-[12px]">{dateTime(p.createdAt)}</Td>
+                    <Td className="text-[11.5px]">{dateTime(p.createdAt)}</Td>
                     <Td>{PAYMENT_METHODS[p.method] ?? p.method}</Td>
                     <Td className="text-muted">{p.note ?? '—'}</Td>
                     <Td className="num text-right font-medium">

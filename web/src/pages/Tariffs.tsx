@@ -54,7 +54,7 @@ export default function Tariffs() {
                   <tr key={t.id} className="hover:bg-soft/70">
                     <Td>
                       <div className="font-medium">{t.name}</div>
-                      <div className="text-[11px] text-muted">{t.description}</div>
+                      <div className="text-[10.5px] text-muted">{t.description}</div>
                     </Td>
                     <Td>
                       <Badge tone={t.transport === 'air' ? 'purple' : 'gray'}>
@@ -95,7 +95,7 @@ export default function Tariffs() {
               })}
             </tbody>
           </Table>
-          <div className="border-t border-line bg-soft px-5 py-3 text-[11.5px] leading-relaxed text-muted">
+          <div className="border-t border-line bg-soft px-5 py-3 text-[11px] leading-relaxed text-muted">
             Пример: 10 кг одежды в коробке 60×40×40 см (0,096 м³). По весу 10 × $2,8 = $28, по объёму 0,096 × $290 = $27,84 → берём <b className="text-ink">$28</b>. Плотность ниже ~100 кг/м³ — считается по объёму.
           </div>
         </Card>
@@ -122,8 +122,8 @@ function Calculator({ tariffs }: { tariffs: any[] }) {
   const t = tariffs.find((x) => x.id === tariffId);
   return (
     <Card className="self-start px-5 py-4">
-      <div className="text-[13.5px] font-medium">Калькулятор доставки</div>
-      <div className="text-[11.5px] text-muted">Для ответа клиенту в чате или по телефону</div>
+      <div className="text-[12.5px] font-medium">Калькулятор доставки</div>
+      <div className="text-[11px] text-muted">Для ответа клиенту в чате или по телефону</div>
       <div className="mt-4 grid gap-3">
         <Field label="Тариф">
           <select className="field" value={tariffId ?? ''} onChange={(e) => setTariffId(Number(e.target.value))}>
@@ -135,7 +135,7 @@ function Calculator({ tariffs }: { tariffs: any[] }) {
           </select>
         </Field>
         <Field label="Вес, кг">
-          <input className="field num text-[15px]" value={f.weightKg} onChange={set('weightKg')} />
+          <input className="field num text-[14px]" value={f.weightKg} onChange={set('weightKg')} />
         </Field>
         <div className="grid grid-cols-3 gap-2">
           <Field label="Д, см">
@@ -153,10 +153,10 @@ function Calculator({ tariffs }: { tariffs: any[] }) {
         <div className="mt-4 rounded-2xl bg-[#F3F0FF] p-4 ring-1 ring-accent-100">
           <div className="label">Стоимость доставки</div>
           <div className="mt-1 flex items-baseline gap-2">
-            <span className="h-display num text-[34px]">{money(res.total)}</span>
-            <span className="num text-[13px] text-muted">≈ {num(res.tjs)} сомони</span>
+            <span className="h-display num text-[30px]">{money(res.total)}</span>
+            <span className="num text-[12px] text-muted">≈ {num(res.tjs)} сомони</span>
           </div>
-          <div className="mt-3 grid grid-cols-2 gap-2 text-[12px]">
+          <div className="mt-3 grid grid-cols-2 gap-2 text-[11.5px]">
             <div className={clsx('rounded-xl px-3 py-2', res.chargedBy === 'weight' ? 'bg-white font-medium' : 'bg-white/50 text-muted')}>
               По весу
               <div className="num">{money(res.byWeight)}</div>
@@ -166,7 +166,7 @@ function Calculator({ tariffs }: { tariffs: any[] }) {
               <div className="num">{money(res.byVolume)}</div>
             </div>
           </div>
-          <div className="mt-2 text-[11.5px] text-muted">
+          <div className="mt-2 text-[11px] text-muted">
             Плотность {res.density ?? '—'} кг/м³ · срок {t?.daysMin}–{t?.daysMax} дней
           </div>
         </div>

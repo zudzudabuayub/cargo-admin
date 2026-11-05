@@ -79,25 +79,25 @@ export default function Parcels() {
             <button
               key={t.value}
               onClick={() => setParam('status', t.value)}
-              className={clsx('inline-flex h-8 items-center gap-1.5 rounded-full px-3 text-[12px] font-medium transition', active ? 'bg-ink text-white' : 'bg-white text-ink-2 shadow-card hover:text-ink')}
+              className={clsx('inline-flex h-8 items-center gap-1.5 rounded-full px-3 text-[11.5px] font-medium transition', active ? 'bg-ink text-white' : 'bg-white text-ink-2 shadow-card hover:text-ink')}
             >
               {t.label}
-              {count != null && <span className={clsx('num text-[10.5px]', active ? 'text-white/60' : 'text-muted')}>{count}</span>}
+              {count != null && <span className={clsx('num text-[10px]', active ? 'text-white/60' : 'text-muted')}>{count}</span>}
             </button>
           );
         })}
         <button
           onClick={() => setParam('filter', filter === 'unidentified' ? '' : 'unidentified')}
-          className={clsx('inline-flex h-8 items-center gap-1.5 rounded-full px-3 text-[12px] font-medium', filter === 'unidentified' ? 'bg-danger text-white' : 'bg-danger-50 text-danger')}
+          className={clsx('inline-flex h-8 items-center gap-1.5 rounded-full px-3 text-[11.5px] font-medium', filter === 'unidentified' ? 'bg-danger text-white' : 'bg-danger-50 text-danger')}
         >
-          Без кода клиента <span className="num text-[10.5px] opacity-70">{data?.counts?.unidentified}</span>
+          Без кода клиента <span className="num text-[10px] opacity-70">{data?.counts?.unidentified}</span>
         </button>
         {[
           ['waiting', 'Ждут > 3 дней'],
           ['unpaid', 'Не оплачены'],
           ['unassigned', 'Не в рейсе'],
         ].map(([k, l]) => (
-          <button key={k} onClick={() => setParam('filter', filter === k ? '' : k)} className={clsx('inline-flex h-8 items-center rounded-full px-3 text-[12px] font-medium', filter === k ? 'bg-accent text-white' : 'bg-accent-50 text-accent')}>
+          <button key={k} onClick={() => setParam('filter', filter === k ? '' : k)} className={clsx('inline-flex h-8 items-center rounded-full px-3 text-[11.5px] font-medium', filter === k ? 'bg-accent text-white' : 'bg-accent-50 text-accent')}>
             {l}
           </button>
         ))}
@@ -116,19 +116,19 @@ export default function Parcels() {
           ))}
         </select>
         {shipmentId && (
-          <button onClick={() => setParam('shipmentId', '')} className="inline-flex h-8 items-center gap-1 rounded-full bg-accent-50 px-3 text-[12px] font-medium text-accent">
+          <button onClick={() => setParam('shipmentId', '')} className="inline-flex h-8 items-center gap-1 rounded-full bg-accent-50 px-3 text-[11.5px] font-medium text-accent">
             Рейс {shipment?.code ?? `#${shipmentId}`} <X size={12} />
           </button>
         )}
-        <div className="ml-auto text-[12px] text-muted">
+        <div className="ml-auto text-[11.5px] text-muted">
           {num(data?.total)} пос. · {kg(data?.sum?.kg)} · {num(data?.sum?.m3, 1)} м³ · {money(data?.sum?.price, 0)}
         </div>
       </div>
 
       {sel.length > 0 && (
         <div className="fade-up sticky top-16 z-30 mb-3 flex flex-wrap items-center gap-2 rounded-2xl bg-ink px-4 py-2.5 text-white shadow-pop">
-          <span className="text-[12.5px] font-medium">Выбрано: {sel.length}</span>
-          <span className="text-[11.5px] text-white/50">
+          <span className="text-[11.5px] font-medium">Выбрано: {sel.length}</span>
+          <span className="text-[11px] text-white/50">
             {kg(selected.reduce((a, p) => a + (p.weightKg || 0), 0))} · {money(selected.reduce((a, p) => a + (p.price || 0), 0))}
           </span>
           <div className="ml-auto flex flex-wrap gap-1.5">
@@ -154,7 +154,7 @@ export default function Parcels() {
                       {s.code} · {s.origin?.name}
                     </MenuItem>
                   ))}
-                  {!ships?.items?.length && <div className="px-3 py-2 text-[12px] text-muted">Нет рейсов в загрузке</div>}
+                  {!ships?.items?.length && <div className="px-3 py-2 text-[11.5px] text-muted">Нет рейсов в загрузке</div>}
                 </>
               )}
             </Menu>
@@ -207,16 +207,16 @@ export default function Parcels() {
                     <input type="checkbox" className="h-4 w-4 accent-[#6A4CFF]" checked={sel.includes(p.id)} onChange={(e) => setSel((s) => (e.target.checked ? [...s, p.id] : s.filter((x) => x !== p.id)))} />
                   </Td>
                   <Td>
-                    <div className="font-mono text-[11.5px]">{p.trackNumber}</div>
-                    <div className="text-[10.5px] text-muted">{p.carrier ?? '—'}</div>
+                    <div className="font-mono text-[11px]">{p.trackNumber}</div>
+                    <div className="text-[10px] text-muted">{p.carrier ?? '—'}</div>
                   </Td>
                   <Td>
                     {p.clientId ? (
                       <div className="flex items-center gap-2">
                         <Avatar name={p.clientName} color={p.clientColor} size={22} />
                         <div>
-                          <div className="text-[12px] font-medium">{p.clientName}</div>
-                          <div className="text-[10.5px] text-accent">{p.clientCode}</div>
+                          <div className="text-[11.5px] font-medium">{p.clientName}</div>
+                          <div className="text-[10px] text-accent">{p.clientCode}</div>
                         </div>
                       </div>
                     ) : (
@@ -225,7 +225,7 @@ export default function Parcels() {
                   </Td>
                   <Td>
                     <div className="max-w-[180px] truncate text-ink-2">{p.description ?? '—'}</div>
-                    <div className="text-[10.5px] text-muted">
+                    <div className="text-[10px] text-muted">
                       {CATEGORY[p.category] ?? p.category}
                       {p.places > 1 ? ` · ${p.places} мест` : ''}
                     </div>
@@ -233,7 +233,7 @@ export default function Parcels() {
                   <Td>
                     <Badge tone={PARCEL_STATUS[p.status]?.tone}>{PARCEL_STATUS[p.status]?.label}</Badge>
                   </Td>
-                  <Td className="text-[12px]">
+                  <Td className="text-[11.5px]">
                     {p.shipmentCode ? (
                       <Link to={`/shipments/${p.shipmentId}`} onClick={(e) => e.stopPropagation()} className="font-medium text-accent">
                         {p.shipmentCode}
@@ -241,18 +241,18 @@ export default function Parcels() {
                     ) : (
                       <span className="text-ink-2">{p.warehouseName ?? '—'}</span>
                     )}
-                    {p.shelf && <div className="text-[10.5px] text-muted">ячейка {p.shelf}</div>}
-                    {p.shipmentCode && p.status === 'received' && <div className="text-[10.5px] text-muted">в листе загрузки</div>}
+                    {p.shelf && <div className="text-[10px] text-muted">ячейка {p.shelf}</div>}
+                    {p.shipmentCode && p.status === 'received' && <div className="text-[10px] text-muted">в листе загрузки</div>}
                   </Td>
                   <Td className="num text-right">
                     <div>{p.weightKg ? kg(p.weightKg) : '—'}</div>
-                    <div className="text-[10.5px] text-muted">{p.volumeM3 ? `${num(p.volumeM3, 2)} м³` : ''}</div>
+                    <div className="text-[10px] text-muted">{p.volumeM3 ? `${num(p.volumeM3, 2)} м³` : ''}</div>
                   </Td>
                   <Td className="num text-right">
                     <div className="font-medium">{money(p.price)}</div>
-                    <div className={clsx('text-[10.5px]', p.paid ? 'text-ok' : 'text-muted')}>{p.price ? (p.paid ? 'оплачено' : 'не оплачено') : ''}</div>
+                    <div className={clsx('text-[10px]', p.paid ? 'text-ok' : 'text-muted')}>{p.price ? (p.paid ? 'оплачено' : 'не оплачено') : ''}</div>
                   </Td>
-                  <Td className="text-right text-[11px] text-muted">{ago(p.deliveredAt ?? p.arrivedAt ?? p.shippedAt ?? p.receivedAt ?? p.createdAt)}</Td>
+                  <Td className="text-right text-[10.5px] text-muted">{ago(p.deliveredAt ?? p.arrivedAt ?? p.shippedAt ?? p.receivedAt ?? p.createdAt)}</Td>
                 </tr>
               ))}
             </tbody>
@@ -306,7 +306,7 @@ function ParcelDrawer({ id, onClose, onChanged }: { id: number | null; onClose: 
           <div className="flex items-start justify-between border-b border-line px-5 py-4">
             <div>
               <div className="label">Посылка · {p.carrier}</div>
-              <div className="mt-1 font-mono text-[17px]">{p.trackNumber}</div>
+              <div className="mt-1 font-mono text-[15px]">{p.trackNumber}</div>
               <div className="mt-1.5 flex gap-1.5">
                 <Badge tone={PARCEL_STATUS[p.status].tone}>{PARCEL_STATUS[p.status].label}</Badge>
                 {p.price != null && <Badge tone={p.paid ? 'green' : 'gray'}>{p.paid ? 'Оплачено' : 'Не оплачено'}</Badge>}
@@ -319,8 +319,8 @@ function ParcelDrawer({ id, onClose, onChanged }: { id: number | null; onClose: 
           <div className="flex-1 space-y-5 overflow-y-auto px-5 py-4 scroll-thin">
             {!p.clientId ? (
               <div className="rounded-2xl bg-danger-50 p-3">
-                <div className="text-[12.5px] font-medium text-danger">Посылка без кода клиента</div>
-                <div className="mb-2 text-[11.5px] text-ink-2">{p.notes ?? 'Найдите владельца по трек-номеру или фото и привяжите посылку.'}</div>
+                <div className="text-[11.5px] font-medium text-danger">Посылка без кода клиента</div>
+                <div className="mb-2 text-[11px] text-ink-2">{p.notes ?? 'Найдите владельца по трек-номеру или фото и привяжите посылку.'}</div>
                 <ClientPicker value={client} onChange={setClient} />
                 <Button size="sm" variant="dark" className="mt-2" disabled={!client} onClick={() => save({ clientId: client.id }, `Привязано к ${client.code}`)}>
                   Привязать к клиенту
@@ -330,12 +330,12 @@ function ParcelDrawer({ id, onClose, onChanged }: { id: number | null; onClose: 
               <Link to={`/clients/${p.clientId}`} className="flex items-center gap-3 rounded-2xl bg-soft p-3 hover:bg-[#F1F1EE]">
                 <Avatar name={p.clientName} color={p.clientColor} size={36} />
                 <div>
-                  <div className="text-[13px] font-medium">{p.clientName}</div>
-                  <div className="text-[11.5px] text-muted">
+                  <div className="text-[12px] font-medium">{p.clientName}</div>
+                  <div className="text-[11px] text-muted">
                     {p.clientCode} · {p.clientPhone}
                   </div>
                 </div>
-                <span className="ml-auto text-[11.5px] text-accent">Карточка →</span>
+                <span className="ml-auto text-[11px] text-accent">Карточка →</span>
               </Link>
             )}
             <div className="grid grid-cols-3 gap-2">
@@ -349,7 +349,7 @@ function ParcelDrawer({ id, onClose, onChanged }: { id: number | null; onClose: 
               ].map(([k, v]) => (
                 <div key={k} className="rounded-xl bg-soft px-3 py-2">
                   <div className="label">{k}</div>
-                  <div className="num mt-0.5 truncate text-[13px] font-medium">{v}</div>
+                  <div className="num mt-0.5 truncate text-[12px] font-medium">{v}</div>
                 </div>
               ))}
             </div>
@@ -408,10 +408,10 @@ function ParcelDrawer({ id, onClose, onChanged }: { id: number | null; onClose: 
             )}
             {p.shipmentCode && (
               <Link to={`/shipments/${p.shipmentId}`} className="flex items-center justify-between rounded-xl border border-line px-3 py-2.5 hover:bg-soft">
-                <span className="flex items-center gap-2 text-[12.5px]">
+                <span className="flex items-center gap-2 text-[11.5px]">
                   <Truck size={14} className="text-muted" /> Рейс <b className="font-medium">{p.shipmentCode}</b>
                 </span>
-                <span className="text-[11.5px] text-accent">Открыть →</span>
+                <span className="text-[11px] text-accent">Открыть →</span>
               </Link>
             )}
             <div>
@@ -422,8 +422,8 @@ function ParcelDrawer({ id, onClose, onChanged }: { id: number | null; onClose: 
                   <div key={e.id} className="relative flex gap-3 pb-3">
                     <span className={clsx('relative z-[1] mt-1 h-[11px] w-[11px] shrink-0 rounded-full ring-4 ring-white', e.status === 'problem' ? 'bg-danger' : e.status === 'delivered' ? 'bg-ink' : 'bg-accent')} />
                     <div>
-                      <div className="text-[12.5px] font-medium">{e.note}</div>
-                      <div className="text-[11px] text-muted">
+                      <div className="text-[11.5px] font-medium">{e.note}</div>
+                      <div className="text-[10.5px] text-muted">
                         {dateTime(e.at)}
                         {e.warehouseName ? ` · ${e.warehouseName}` : ''}
                       </div>
@@ -453,22 +453,22 @@ function DeliverModal({ open, onClose, parcels, onDone }: { open: boolean; onClo
         <div className="flex items-center justify-between rounded-2xl bg-soft px-4 py-3">
           <div>
             <div className="label">К оплате</div>
-            <div className="h-display num mt-1 text-[26px]">{money(sum)}</div>
+            <div className="h-display num mt-1 text-[22px]">{money(sum)}</div>
           </div>
-          <div className="text-right text-[11.5px] text-muted">
+          <div className="text-right text-[11px] text-muted">
             {unpaid.length} из {parcels.length} не оплачены
             <br />≈ {num(sum * 10.95)} сомони
           </div>
         </div>
         {sum > 0 && (
           <>
-            <label className="flex items-center gap-2 text-[12.5px]">
+            <label className="flex items-center gap-2 text-[11.5px]">
               <input type="checkbox" className="h-4 w-4 accent-[#6A4CFF]" checked={withPayment} onChange={(e) => setWithPayment(e.target.checked)} /> Принять оплату при выдаче
             </label>
             {withPayment && (
               <div className="flex flex-wrap gap-1.5">
                 {Object.entries(PAYMENT_METHODS).map(([k, v]) => (
-                  <button key={k} onClick={() => setMethod(k)} className={clsx('h-8 rounded-full border px-3 text-[12px]', method === k ? 'border-ink bg-ink text-white' : 'border-line-2 hover:bg-soft')}>
+                  <button key={k} onClick={() => setMethod(k)} className={clsx('h-8 rounded-full border px-3 text-[11.5px]', method === k ? 'border-ink bg-ink text-white' : 'border-line-2 hover:bg-soft')}>
                     {v}
                   </button>
                 ))}

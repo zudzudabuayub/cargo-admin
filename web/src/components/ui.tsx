@@ -6,6 +6,26 @@ import { initials, type Tone } from '../lib/format';
 
 export { clsx };
 
+// Блокировка прокрутки страницы под модальными окнами и шторками
+let scrollLocks = 0;
+export function useScrollLock(active: boolean) {
+  useEffect(() => {
+    if (!active) return;
+    const body = document.body;
+    const gap = window.innerWidth - document.documentElement.clientWidth;
+    if (scrollLocks++ === 0) {
+      body.style.overflow = 'hidden';
+      if (gap > 0) body.style.paddingRight = `${gap}px`;
+    }
+    return () => {
+      if (--scrollLocks === 0) {
+        body.style.overflow = '';
+        body.style.paddingRight = '';
+      }
+    };
+  }, [active]);
+}
+
 const toneCls: Record<Tone, string> = {
   gray: 'bg-[#F1F1EF] text-[#5D5D63]',
   blue: 'bg-[#EAF3FF] text-[#2563C9]',
@@ -19,7 +39,7 @@ const toneCls: Record<Tone, string> = {
 
 export function Badge({ tone = 'gray', children, className, dot }: { tone?: Tone; children: ReactNode; className?: string; dot?: boolean }) {
   return (
-    <span className={clsx('inline-flex h-[20px] items-center gap-1 whitespace-nowrap rounded-md px-1.5 text-[11px] font-medium leading-none', toneCls[tone], className)}>
+    <span className={clsx('inline-flex h-[20px] items-center gap-1 whitespace-nowrap rounded-md px-1.5 text-[10.5px] font-medium leading-none', toneCls[tone], className)}>
       {dot && <span className="h-1.5 w-1.5 rounded-full bg-current" />}
       {children}
     </span>
@@ -42,9 +62,9 @@ export function Button({
       disabled={rest.disabled || loading}
       className={clsx(
         'inline-flex select-none items-center justify-center gap-1.5 whitespace-nowrap rounded-full font-medium transition active:scale-[.98] disabled:cursor-not-allowed disabled:opacity-50',
-        size === 'sm' && 'h-7 px-3 text-[12px]',
-        size === 'md' && 'h-9 px-4 text-[12.5px]',
-        size === 'lg' && 'h-11 px-5 text-[13.5px]',
+        size === 'sm' && 'h-7 px-3 text-[11.5px]',
+        size === 'md' && 'h-8 px-3.5 text-[11.5px]',
+        size === 'lg' && 'h-10 px-5 text-[12.5px]',
         variant === 'primary' && 'bg-accent text-white shadow-[0_1px_0_rgba(255,255,255,.2)_inset,0_4px_14px_-4px_rgba(106,76,255,.6)] hover:bg-accent-600',
         variant === 'dark' && 'bg-ink text-white hover:bg-ink-2',
         variant === 'outline' && 'border border-line-2 bg-white text-ink hover:bg-soft',
@@ -62,10 +82,10 @@ export function Button({
 
 export function IconButton({ children, className, badge, ...rest }: ButtonHTMLAttributes<HTMLButtonElement> & { badge?: number | string }) {
   return (
-    <button {...rest} className={clsx('relative grid h-9 w-9 place-items-center rounded-full text-ink-2 transition hover:bg-black/[.05]', className)}>
+    <button {...rest} className={clsx('relative grid h-8 w-8 place-items-center rounded-full text-ink-2 transition hover:bg-black/[.05]', className)}>
       {children}
       {badge ? (
-        <span className="absolute -right-0.5 -top-0.5 grid h-[17px] min-w-[17px] place-items-center rounded-full bg-danger px-1 text-[9.5px] font-semibold text-white ring-2 ring-canvas">{badge}</span>
+        <span className="absolute -right-0.5 -top-0.5 grid h-[17px] min-w-[17px] place-items-center rounded-full bg-danger px-1 text-[9px] font-semibold text-white ring-2 ring-canvas">{badge}</span>
       ) : null}
     </button>
   );
@@ -83,8 +103,8 @@ export function CardHeader({ title, sub, right, className }: { title: ReactNode;
   return (
     <div className={clsx('flex items-start justify-between gap-3 px-5 pt-4', className)}>
       <div>
-        <div className="text-[13.5px] font-medium">{title}</div>
-        {sub && <div className="mt-0.5 text-[11.5px] text-muted">{sub}</div>}
+        <div className="text-[12.5px] font-medium">{title}</div>
+        {sub && <div className="mt-0.5 text-[11px] text-muted">{sub}</div>}
       </div>
       {right}
     </div>
@@ -120,13 +140,13 @@ export function Segmented<T extends string>({ value, onChange, items, className,
           onClick={() => onChange(it.value)}
           className={clsx(
             'inline-flex items-center gap-1.5 whitespace-nowrap rounded-full font-medium transition',
-            size === 'sm' ? 'h-6 px-2.5 text-[11px]' : 'h-7 px-3 text-[12px]',
+            size === 'sm' ? 'h-6 px-2.5 text-[10.5px]' : 'h-7 px-3 text-[11.5px]',
             value === it.value ? 'bg-ink text-white shadow-sm' : 'text-ink-2 hover:text-ink',
           )}
         >
-          {value === it.value && <span className="text-[10px]">✓</span>}
+          {value === it.value && <span className="text-[9.5px]">✓</span>}
           {it.label}
-          {it.count != null && <span className={clsx('num text-[10.5px]', value === it.value ? 'text-white/60' : 'text-muted')}>{it.count}</span>}
+          {it.count != null && <span className={clsx('num text-[10px]', value === it.value ? 'text-white/60' : 'text-muted')}>{it.count}</span>}
         </button>
       ))}
     </div>
@@ -140,10 +160,10 @@ export function Tabs<T extends string>({ value, onChange, items }: { value: T; o
         <button
           key={it.value}
           onClick={() => onChange(it.value)}
-          className={clsx('-mb-px flex items-center gap-1.5 border-b-2 pb-2.5 pt-1 text-[12.5px] font-medium transition', value === it.value ? 'border-ink text-ink' : 'border-transparent text-muted hover:text-ink')}
+          className={clsx('-mb-px flex items-center gap-1.5 border-b-2 pb-2.5 pt-1 text-[11.5px] font-medium transition', value === it.value ? 'border-ink text-ink' : 'border-transparent text-muted hover:text-ink')}
         >
           {it.label}
-          {it.count != null && <span className="num rounded-md bg-[#F0F0EE] px-1.5 text-[10.5px] text-ink-2">{it.count}</span>}
+          {it.count != null && <span className="num rounded-md bg-[#F0F0EE] px-1.5 text-[10px] text-ink-2">{it.count}</span>}
         </button>
       ))}
     </div>
@@ -151,6 +171,7 @@ export function Tabs<T extends string>({ value, onChange, items }: { value: T; o
 }
 
 export function Modal({ open, onClose, children, width = 520, className }: { open: boolean; onClose: () => void; children: ReactNode; width?: number; className?: string }) {
+  useScrollLock(open);
   useEffect(() => {
     if (!open) return;
     const onKey = (e: KeyboardEvent) => e.key === 'Escape' && onClose();
@@ -159,7 +180,7 @@ export function Modal({ open, onClose, children, width = 520, className }: { ope
   }, [open, onClose]);
   if (!open) return null;
   return createPortal(
-    <div className="fixed inset-0 z-[1000] flex items-start justify-center overflow-y-auto bg-[#1b1b20]/25 p-4 pt-[8vh] backdrop-blur-[3px]" onMouseDown={(e) => e.target === e.currentTarget && onClose()}>
+    <div className="fixed inset-0 z-[1000] flex items-start justify-center overflow-y-auto overscroll-contain bg-[#1b1b20]/25 p-4 pt-[6vh] backdrop-blur-[3px]" onMouseDown={(e) => e.target === e.currentTarget && onClose()}>
       <div className={clsx('fade-up relative w-full rounded-[20px] bg-white shadow-pop', className)} style={{ maxWidth: width }}>
         {children}
       </div>
@@ -173,8 +194,8 @@ export function ModalHeader({ title, sub, onClose, eyebrow }: { title: ReactNode
     <div className="flex items-start justify-between gap-4 px-6 pb-2 pt-5">
       <div>
         {eyebrow && <div className="mb-2">{eyebrow}</div>}
-        <div className="h-display text-[21px]">{title}</div>
-        {sub && <div className="mt-1 text-[12px] leading-relaxed text-muted">{sub}</div>}
+        <div className="h-display text-[18px]">{title}</div>
+        {sub && <div className="mt-1 text-[11.5px] leading-relaxed text-muted">{sub}</div>}
       </div>
       <button onClick={onClose} className="grid h-8 w-8 shrink-0 place-items-center rounded-full text-muted hover:bg-black/5 hover:text-ink">
         <X size={16} />
@@ -184,6 +205,7 @@ export function ModalHeader({ title, sub, onClose, eyebrow }: { title: ReactNode
 }
 
 export function Drawer({ open, onClose, children, width = 460 }: { open: boolean; onClose: () => void; children: ReactNode; width?: number }) {
+  useScrollLock(open);
   useEffect(() => {
     if (!open) return;
     const onKey = (e: KeyboardEvent) => e.key === 'Escape' && onClose();
@@ -192,7 +214,7 @@ export function Drawer({ open, onClose, children, width = 460 }: { open: boolean
   }, [open, onClose]);
   if (!open) return null;
   return createPortal(
-    <div className="fixed inset-0 z-[900] bg-[#1b1b20]/20" onMouseDown={(e) => e.target === e.currentTarget && onClose()}>
+    <div className="fixed inset-0 z-[900] overscroll-contain bg-[#1b1b20]/20" onMouseDown={(e) => e.target === e.currentTarget && onClose()}>
       <div className="absolute bottom-2 right-2 top-2 flex flex-col overflow-hidden rounded-[20px] bg-white shadow-pop" style={{ width: `min(${width}px, calc(100vw - 16px))`, animation: 'fade-up .2s ease-out' }}>
         {children}
       </div>
@@ -204,9 +226,9 @@ export function Drawer({ open, onClose, children, width = 460 }: { open: boolean
 export function Field({ label, children, hint, className }: { label: ReactNode; children: ReactNode; hint?: ReactNode; className?: string }) {
   return (
     <label className={clsx('block', className)}>
-      <span className="mb-1.5 block text-[11.5px] font-medium text-ink-2">{label}</span>
+      <span className="mb-1.5 block text-[11px] font-medium text-ink-2">{label}</span>
       {children}
-      {hint && <span className="mt-1 block text-[11px] text-muted">{hint}</span>}
+      {hint && <span className="mt-1 block text-[10.5px] text-muted">{hint}</span>}
     </label>
   );
 }
@@ -223,8 +245,8 @@ export function Empty({ icon, title, sub, action }: { icon?: ReactNode; title: s
   return (
     <div className="flex flex-col items-center justify-center px-6 py-14 text-center">
       {icon && <div className="mb-3 grid h-11 w-11 place-items-center rounded-2xl bg-soft text-muted">{icon}</div>}
-      <div className="text-[13.5px] font-medium">{title}</div>
-      {sub && <div className="mt-1 max-w-xs text-[12px] text-muted">{sub}</div>}
+      <div className="text-[12.5px] font-medium">{title}</div>
+      {sub && <div className="mt-1 max-w-xs text-[11.5px] text-muted">{sub}</div>}
       {action && <div className="mt-4">{action}</div>}
     </div>
   );
@@ -239,10 +261,10 @@ export function Kpi({ label, value, badge, sub, onClick }: { label: string; valu
     <button onClick={onClick} className="group min-w-0 text-left">
       <div className="label">{label}</div>
       <div className="mt-1.5 flex items-center gap-2">
-        <span className="h-display num text-[28px] leading-none">{value}</span>
+        <span className="h-display num text-[24px] leading-none">{value}</span>
         {badge}
       </div>
-      {sub && <div className="mt-1.5 truncate text-[11.5px] text-muted group-hover:text-ink-2">{sub}</div>}
+      {sub && <div className="mt-1.5 truncate text-[11px] text-muted group-hover:text-ink-2">{sub}</div>}
     </button>
   );
 }
@@ -251,8 +273,8 @@ export function Stat({ label, value, sub, tone }: { label: string; value: ReactN
   return (
     <div className="rounded-xl bg-soft px-3 py-2.5">
       <div className="label">{label}</div>
-      <div className={clsx('num mt-1 text-[17px] font-medium tracking-tight', tone === 'red' && 'text-danger', tone === 'purple' && 'text-accent', tone === 'green' && 'text-ok')}>{value}</div>
-      {sub && <div className="mt-0.5 text-[11px] text-muted">{sub}</div>}
+      <div className={clsx('num mt-1 text-[15px] font-medium tracking-tight', tone === 'red' && 'text-danger', tone === 'purple' && 'text-accent', tone === 'green' && 'text-ok')}>{value}</div>
+      {sub && <div className="mt-0.5 text-[10.5px] text-muted">{sub}</div>}
     </div>
   );
 }
@@ -278,11 +300,11 @@ export function Menu({ trigger, children, align = 'right', placement = 'bottom' 
 
 export function MenuItem({ icon, children, onClick, danger, sub }: { icon?: ReactNode; children: ReactNode; onClick?: () => void; danger?: boolean; sub?: ReactNode }) {
   return (
-    <button onClick={onClick} className={clsx('flex w-full items-center gap-2.5 rounded-lg px-2.5 py-2 text-left text-[12.5px] hover:bg-soft', danger && 'text-danger')}>
+    <button onClick={onClick} className={clsx('flex w-full items-center gap-2.5 rounded-lg px-2.5 py-2 text-left text-[11.5px] hover:bg-soft', danger && 'text-danger')}>
       {icon && <span className="text-muted">{icon}</span>}
       <span className="flex-1">
         {children}
-        {sub && <span className="block text-[11px] text-muted">{sub}</span>}
+        {sub && <span className="block text-[10.5px] text-muted">{sub}</span>}
       </span>
     </button>
   );
@@ -298,7 +320,7 @@ export function CopyButton({ text, label = 'Копировать', className }: 
         setDone(true);
         setTimeout(() => setDone(false), 1600);
       }}
-      className={clsx('inline-flex h-6 items-center rounded-md px-2 text-[11px] font-medium transition', done ? 'bg-ok-50 text-ok' : 'bg-white text-ink-2 shadow-card hover:text-ink', className)}
+      className={clsx('inline-flex h-6 items-center rounded-md px-2 text-[10.5px] font-medium transition', done ? 'bg-ok-50 text-ok' : 'bg-white text-ink-2 shadow-card hover:text-ink', className)}
     >
       {done ? 'Скопировано' : label}
     </button>
@@ -307,11 +329,11 @@ export function CopyButton({ text, label = 'Копировать', className }: 
 
 export function PageHeader({ eyebrow, title, sub, right }: { eyebrow?: ReactNode; title: ReactNode; sub?: ReactNode; right?: ReactNode }) {
   return (
-    <div className="mb-5 flex flex-wrap items-end justify-between gap-4">
+    <div className="mb-4 flex flex-wrap items-end justify-between gap-4">
       <div className="min-w-0">
         {eyebrow && <div className="label mb-1.5">{eyebrow}</div>}
-        <h1 className="h-display text-[30px] leading-tight">{title}</h1>
-        {sub && <div className="mt-1 text-[12.5px] text-muted">{sub}</div>}
+        <h1 className="h-display text-[26px] leading-tight">{title}</h1>
+        {sub && <div className="mt-1 text-[11.5px] text-muted">{sub}</div>}
       </div>
       {right && <div className="flex flex-wrap items-center gap-2">{right}</div>}
     </div>
@@ -321,15 +343,15 @@ export function PageHeader({ eyebrow, title, sub, right }: { eyebrow?: ReactNode
 export function Table({ children, className }: { children: ReactNode; className?: string }) {
   return (
     <div className={clsx('overflow-x-auto scroll-thin', className)}>
-      <table className="w-full border-separate border-spacing-0 text-[12.5px]">{children}</table>
+      <table className="w-full border-separate border-spacing-0 text-[11.5px]">{children}</table>
     </div>
   );
 }
 export const Th = ({ children, className }: { children?: ReactNode; className?: string }) => (
-  <th className={clsx('sticky top-0 z-[1] whitespace-nowrap border-b border-line bg-white px-3 py-2.5 text-left text-[10.5px] font-medium uppercase tracking-[0.06em] text-muted first:pl-5 last:pr-5', className)}>{children}</th>
+  <th className={clsx('sticky top-0 z-[1] whitespace-nowrap border-b border-line bg-white px-3 py-2 text-left text-[10px] font-medium uppercase tracking-[0.06em] text-muted first:pl-5 last:pr-5', className)}>{children}</th>
 );
 export const Td = ({ children, className, ...rest }: React.TdHTMLAttributes<HTMLTableCellElement>) => (
-  <td {...rest} className={clsx('border-b border-line/70 px-3 py-2.5 align-middle first:pl-5 last:pr-5', className)}>
+  <td {...rest} className={clsx('border-b border-line/70 px-3 py-2 align-middle first:pl-5 last:pr-5', className)}>
     {children}
   </td>
 );

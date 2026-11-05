@@ -161,11 +161,10 @@ export function MapView({
       },
     }).addTo(m);
     if (tiles) {
-      L.tileLayer('https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png', {
-        attribution: '© OpenStreetMap, © CARTO',
-        subdomains: 'abcd',
+      // Подложка: по умолчанию OpenStreetMap (в серых тонах через CSS). Свой сервер тайлов — VITE_MAP_TILES.
+      L.tileLayer(import.meta.env.VITE_MAP_TILES || 'https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: import.meta.env.VITE_MAP_ATTRIBUTION || '© OpenStreetMap',
         maxZoom: 19,
-        opacity: 0.9,
       }).addTo(m);
     }
     m.createPane('labels');

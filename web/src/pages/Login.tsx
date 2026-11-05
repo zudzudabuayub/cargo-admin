@@ -36,11 +36,11 @@ export default function Login() {
           <span className="grid h-9 w-9 place-items-center rounded-xl bg-ink text-white">
             <Boxes size={18} />
           </span>
-          <span className="text-[15px] font-semibold">Cargo Express</span>
+          <span className="text-[14px] font-semibold">Cargo Express</span>
         </div>
         <div>
           <div className="label mb-2">Китай → Таджикистан</div>
-          <div className="h-display max-w-[560px] text-[40px] leading-[1.1]">Каждый груз под контролем — от склада в Гуанчжоу до выдачи в Душанбе.</div>
+          <div className="h-display max-w-[560px] text-[34px] leading-[1.1]">Каждый груз под контролем — от склада в Гуанчжоу до выдачи в Душанбе.</div>
           <div className="mt-10 max-w-[640px]">
             <TruckArt className="w-full" />
             <RouteProgress
@@ -56,7 +56,7 @@ export default function Login() {
             />
           </div>
         </div>
-        <div className="text-[11.5px] text-muted">Рейсы · посылки · склады · клиенты · чаты · финансы</div>
+        <div className="text-[11px] text-muted">Рейсы · посылки · склады · клиенты · чаты · финансы</div>
       </div>
       <div className="flex items-center justify-center bg-white p-8">
         <form onSubmit={submit} className="w-full max-w-[360px]">
@@ -65,8 +65,8 @@ export default function Login() {
               <Boxes size={20} />
             </span>
           </div>
-          <h1 className="h-display text-[30px]">Вход в панель</h1>
-          <div className="mt-1 text-[12.5px] text-muted">Для сотрудников карго-компании</div>
+          <h1 className="h-display text-[26px]">Вход в панель</h1>
+          <div className="mt-1 text-[11.5px] text-muted">Для сотрудников карго-компании</div>
           <div className="mt-8 space-y-4">
             <Field label="Email">
               <input className="field h-10" value={email} onChange={(e) => setEmail(e.target.value)} autoComplete="username" />
@@ -74,7 +74,7 @@ export default function Login() {
             <Field label="Пароль">
               <input className="field h-10" type="password" value={password} onChange={(e) => setPassword(e.target.value)} autoComplete="current-password" />
             </Field>
-            {error && <div className="rounded-lg bg-danger-50 px-3 py-2 text-[12px] text-danger">{error}</div>}
+            {error && <div className="rounded-lg bg-danger-50 px-3 py-2 text-[11.5px] text-danger">{error}</div>}
             <Button variant="dark" size="lg" className="w-full" loading={busy} icon={<LogIn size={15} />}>
               Войти
             </Button>
@@ -89,10 +89,10 @@ export default function Login() {
                   setEmail(d.email);
                   setPassword(d.password);
                 }}
-                className="flex w-full items-center justify-between rounded-lg px-2 py-1.5 text-left text-[12px] hover:bg-white"
+                className="flex w-full items-center justify-between rounded-lg px-2 py-1.5 text-left text-[11.5px] hover:bg-white"
               >
                 <span className="font-medium">{d.role}</span>
-                <span className="font-mono text-[11px] text-muted">
+                <span className="font-mono text-[10.5px] text-muted">
                   {d.email} / {d.password}
                 </span>
               </button>

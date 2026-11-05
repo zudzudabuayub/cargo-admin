@@ -76,9 +76,9 @@ export function RouteProgress({
                 )}
               />
               <div className={clsx('absolute left-1/2 top-3 whitespace-nowrap text-center', i === 0 ? 'translate-x-[-10%]' : i === n - 1 ? 'translate-x-[-90%]' : '-translate-x-1/2')}>
-                <div className={clsx('text-[11px] leading-tight', passed ? 'text-ink' : 'text-muted')}>{s.kind === 'border' ? `КПП ${s.name}` : s.name}</div>
+                <div className={clsx('text-[10.5px] leading-tight', passed ? 'text-ink' : 'text-muted')}>{s.kind === 'border' ? `КПП ${s.name}` : s.name}</div>
                 {!compact && (
-                  <div className={clsx('num text-[10.5px] leading-tight', i === n - 1 ? (risk === 'delayed' ? 'text-danger' : 'text-accent') : 'text-muted')}>
+                  <div className={clsx('num text-[10px] leading-tight', i === n - 1 ? (risk === 'delayed' ? 'text-danger' : 'text-accent') : 'text-muted')}>
                     {i === 0 && departedAt ? day(departedAt) : i === n - 1 && etaAt ? `ETA ${day(etaAt)}` : passed && passedTime(s) ? day(passedTime(s)) : ''}
                   </div>
                 )}
@@ -92,7 +92,7 @@ export function RouteProgress({
             <Truck size={compact ? 11 : 14} strokeWidth={2.2} className="relative" />
           </div>
           {detour && !compact && (
-            <div className="absolute bottom-full left-1/2 mb-3 -translate-x-1/2 whitespace-nowrap rounded-full bg-white px-2 py-0.5 text-[10.5px] font-medium shadow-pop">
+            <div className="absolute bottom-full left-1/2 mb-3 -translate-x-1/2 whitespace-nowrap rounded-full bg-white px-2 py-0.5 text-[10px] font-medium shadow-pop">
               <span className="mr-1 inline-block h-1.5 w-1.5 rounded-full bg-accent align-middle" />
               {detour.label}
             </div>

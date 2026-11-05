@@ -53,7 +53,7 @@ export function Timeline({ items, daysBack = 8, daysAhead = 14, maxRows = 9 }: {
             <div key={t} className="absolute inset-y-0 w-px bg-line/70" style={{ left: `${x(t)}%` }} />
           ))}
           <div className="absolute -bottom-1 -top-6 z-10 w-[1.5px] bg-accent" style={{ left: `${x(now)}%` }}>
-            <div className="absolute -top-1 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full bg-accent px-2 py-[2px] text-[10px] font-semibold text-white">Сегодня</div>
+            <div className="absolute -top-1 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full bg-accent px-2 py-[2px] text-[9.5px] font-semibold text-white">Сегодня</div>
           </div>
         </div>
         {rows.map((r) => {
@@ -74,8 +74,8 @@ export function Timeline({ items, daysBack = 8, daysAhead = 14, maxRows = 9 }: {
                   <Avatar name={r.driverName ?? '—'} color={r.driverColor} size={24} />
                 )}
                 <div className="min-w-0">
-                  <div className="truncate text-[11.5px] font-medium">{r.transport === 'air' ? 'Авиа-партия' : r.driverName ?? 'Без водителя'}</div>
-                  <div className="truncate text-[10.5px] text-muted">{r.plate ?? r.route}</div>
+                  <div className="truncate text-[11px] font-medium">{r.transport === 'air' ? 'Авиа-партия' : r.driverName ?? 'Без водителя'}</div>
+                  <div className="truncate text-[10px] text-muted">{r.plate ?? r.route}</div>
                 </div>
               </div>
               <div className="relative h-full">
@@ -83,7 +83,7 @@ export function Timeline({ items, daysBack = 8, daysAhead = 14, maxRows = 9 }: {
                   onClick={() => nav(`/shipments/${r.id}`)}
                   title={`${r.code} · ${r.route}`}
                   className={clsx(
-                    'absolute top-1/2 flex h-[20px] -translate-y-1/2 items-center overflow-hidden rounded-full px-2 text-[10.5px] font-semibold transition hover:brightness-110',
+                    'absolute top-1/2 flex h-[20px] -translate-y-1/2 items-center overflow-hidden rounded-full px-2 text-[10px] font-semibold transition hover:brightness-110',
                     upcoming && 'border border-dashed border-[#BDBDB8] bg-[#F4F4F1] text-ink-2',
                     done && 'bg-[#E9E9E6] text-ink-2',
                     !upcoming && !done && 'bg-accent text-white',
@@ -95,7 +95,7 @@ export function Timeline({ items, daysBack = 8, daysAhead = 14, maxRows = 9 }: {
                 {late > 3600000 && !done && (
                   <>
                     <div className={clsx('absolute top-1/2 h-[20px] -translate-y-1/2 rounded-r-full', r.risk === 'delayed' ? 'bg-danger' : 'bg-warn')} style={{ left: `${x(pe)}%`, width: `${x(e) - x(pe)}%` }} />
-                    <div className={clsx('absolute top-1/2 ml-1.5 -translate-y-1/2 whitespace-nowrap rounded-full px-1.5 py-[1px] text-[10px] font-semibold', r.risk === 'delayed' ? 'bg-danger-50 text-danger' : 'bg-warn-50 text-[#B26B00]')} style={{ left: `${x(e)}%` }}>
+                    <div className={clsx('absolute top-1/2 ml-1.5 -translate-y-1/2 whitespace-nowrap rounded-full px-1.5 py-[1px] text-[9.5px] font-semibold', r.risk === 'delayed' ? 'bg-danger-50 text-danger' : 'bg-warn-50 text-[#B26B00]')} style={{ left: `${x(e)}%` }}>
                       +{hoursLabel(late / 3600000)}
                     </div>
                   </>

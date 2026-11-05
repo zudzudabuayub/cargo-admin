@@ -108,7 +108,7 @@ export default function ShipmentDetail() {
               Рейсы / {s.route.name} / {s.code}
             </div>
             <div className="flex items-center gap-2.5">
-              <h1 className="h-display text-[30px] leading-none">Рейс {s.code}</h1>
+              <h1 className="h-display text-[26px] leading-none">Рейс {s.code}</h1>
               <Badge tone={st.tone}>{st.label}</Badge>
               {s.risk !== 'ok' && ['in_transit', 'border', 'customs'].includes(s.status) && (
                 <Badge tone={RISK[s.risk].tone} dot>
@@ -204,10 +204,10 @@ export default function ShipmentDetail() {
             <Card className="px-5 pb-5 pt-4">
               <div className="flex items-start justify-between">
                 <div>
-                  <div className="text-[13.5px] font-medium">
+                  <div className="text-[12.5px] font-medium">
                     План загрузки · {s.truck ? `${s.truck.kind} ${s.truck.capacityM3} м³` : 'авиа-партия'}
                   </div>
-                  <div className="text-[11.5px] text-muted">
+                  <div className="text-[11px] text-muted">
                     {num(s.load.places)} мест · {kg(s.load.kg)} из {kg(s.truck?.capacityKg)} · пломба {s.sealNumber ?? '—'}
                   </div>
                 </div>
@@ -215,12 +215,12 @@ export default function ShipmentDetail() {
               </div>
               <div className="mt-4 grid grid-cols-[repeat(13,minmax(0,1fr))] gap-1.5">
                 {Array.from({ length: cells }).map((_, i) => (
-                  <div key={i} className={clsx('grid aspect-[1/1.1] place-items-center rounded-md text-[9.5px] font-medium', i < filled ? (i === filled - 1 ? 'bg-accent text-white' : 'bg-ink text-white') : 'bg-[#F0F0ED] text-muted')}>
+                  <div key={i} className={clsx('grid aspect-[1/1.1] place-items-center rounded-md text-[9px] font-medium', i < filled ? (i === filled - 1 ? 'bg-accent text-white' : 'bg-ink text-white') : 'bg-[#F0F0ED] text-muted')}>
                     <span className="num leading-none">{String(i + 1).padStart(2, '0')}</span>
                   </div>
                 ))}
               </div>
-              <div className="mt-3 flex items-center gap-4 text-[11px] text-muted">
+              <div className="mt-3 flex items-center gap-4 text-[10.5px] text-muted">
                 <span className="flex items-center gap-1.5">
                   <span className="h-2 w-2 rounded-sm bg-ink" /> Загружено
                 </span>
@@ -240,14 +240,14 @@ export default function ShipmentDetail() {
                 ].map(([k, v]) => (
                   <div key={k}>
                     <div className="label">{k}</div>
-                    <div className="num mt-0.5 text-[15px] font-medium">{v}</div>
+                    <div className="num mt-0.5 text-[14px] font-medium">{v}</div>
                   </div>
                 ))}
               </div>
             </Card>
             <Card className="px-5 py-4">
-              <div className="text-[13.5px] font-medium">Документы</div>
-              <div className="mt-3 space-y-3 text-[12px]">
+              <div className="text-[12.5px] font-medium">Документы</div>
+              <div className="mt-3 space-y-3 text-[11.5px]">
                 {[
                   ['Пломба', s.sealNumber],
                   ['Декларация', s.declaration],
@@ -262,7 +262,7 @@ export default function ShipmentDetail() {
                 ))}
                 <div className="flex flex-wrap gap-1.5 pt-1">
                   {['CMR', 'TIR Carnet', 'Инвойс', 'Манифест'].map((d) => (
-                    <span key={d} className="inline-flex items-center gap-1 rounded-md bg-soft px-2 py-1 text-[11px]">
+                    <span key={d} className="inline-flex items-center gap-1 rounded-md bg-soft px-2 py-1 text-[10.5px]">
                       <FileText size={11} className="text-muted" /> {d}
                     </span>
                   ))}
@@ -283,7 +283,7 @@ export default function ShipmentDetail() {
                   { value: 'parcels', label: 'Посылки', count: s.parcels.length },
                 ]}
               />
-              <Link to={`/parcels?shipmentId=${s.id}`} className="text-[12px] font-medium text-accent">
+              <Link to={`/parcels?shipmentId=${s.id}`} className="text-[11.5px] font-medium text-accent">
                 Открыть в посылках →
               </Link>
             </div>
@@ -306,7 +306,7 @@ export default function ShipmentDetail() {
                           <Link to={`/clients/${c.id}`} className="flex items-center gap-2">
                             <Avatar name={c.name} color={c.color} size={24} />
                             <span className="font-medium">{c.name}</span>
-                            <span className="text-[11.5px] text-accent">{c.code}</span>
+                            <span className="text-[11px] text-accent">{c.code}</span>
                           </Link>
                         </Td>
                         <Td className="num text-ink-2">{c.phone}</Td>
@@ -343,7 +343,7 @@ export default function ShipmentDetail() {
                   <tbody>
                     {s.parcels.map((p: any) => (
                       <tr key={p.id} className="hover:bg-soft/70">
-                        <Td className="font-mono text-[11.5px]">{p.trackNumber}</Td>
+                        <Td className="font-mono text-[11px]">{p.trackNumber}</Td>
                         <Td>
                           <span className="text-accent">{p.clientCode}</span> <span className="text-ink-2">{p.clientName}</span>
                         </Td>
@@ -367,7 +367,7 @@ export default function ShipmentDetail() {
         </div>
         <Card className="self-start px-5 py-4">
           <div className="flex items-center justify-between">
-            <div className="text-[13.5px] font-medium">История рейса</div>
+            <div className="text-[12.5px] font-medium">История рейса</div>
             <span className="label">время Душанбе</span>
           </div>
           <div className="relative mt-3">
@@ -381,11 +381,11 @@ export default function ShipmentDetail() {
                     <Icon size={13} />
                   </span>
                   <div className="min-w-0 pt-0.5">
-                    <div className="num text-[11px] text-muted">
+                    <div className="num text-[10.5px] text-muted">
                       {dateTime(e.at)} {e.actor && <>· {e.actor}</>}
                     </div>
-                    <div className="text-[12.5px] font-medium">{e.title}</div>
-                    {e.description && <div className="text-[11.5px] leading-snug text-ink-2">{e.description}</div>}
+                    <div className="text-[11.5px] font-medium">{e.title}</div>
+                    {e.description && <div className="text-[11px] leading-snug text-ink-2">{e.description}</div>}
                   </div>
                 </div>
               );
@@ -409,11 +409,11 @@ function AssistantCard({ s, approved, onReroute, onDone }: { s: any; approved: a
   if (!active && !approved) {
     return (
       <Card className="px-5 py-4">
-        <div className="flex items-center gap-2 text-[12px] font-medium text-accent">
+        <div className="flex items-center gap-2 text-[11.5px] font-medium text-accent">
           <Sparkles size={14} /> Ассистент
         </div>
-        <div className="h-display mt-2 text-[17px]">{s.status === 'loading' || s.status === 'planned' ? 'Рейс формируется на складе' : 'Рейс завершён без замечаний'}</div>
-        <div className="mt-2 text-[12px] leading-relaxed text-ink-2">
+        <div className="h-display mt-2 text-[15px]">{s.status === 'loading' || s.status === 'planned' ? 'Рейс формируется на складе' : 'Рейс завершён без замечаний'}</div>
+        <div className="mt-2 text-[11.5px] leading-relaxed text-ink-2">
           {s.status === 'loading' || s.status === 'planned'
             ? `Загружено ${kg(s.load.kg)} — ${Math.round((s.load.kg / (s.truck?.capacityKg || 20000)) * 100)}% грузоподъёмности. Добавьте посылки со склада «${s.origin?.name}» в разделе «Посылки → На складе в Китае».`
             : `Прибыл ${dateTime(s.arrivedAt)}. Клиенты получили уведомления о готовности к выдаче.`}
@@ -431,16 +431,16 @@ function AssistantCard({ s, approved, onReroute, onDone }: { s: any; approved: a
   return (
     <div className="flex flex-col rounded-xl2 bg-[#F3F0FF] p-5 ring-1 ring-accent-100">
       <div className="flex items-center justify-between">
-        <span className="inline-flex items-center gap-1.5 text-[12px] font-medium text-accent">
+        <span className="inline-flex items-center gap-1.5 text-[11.5px] font-medium text-accent">
           <span className="grid h-6 w-6 place-items-center rounded-full bg-gradient-to-br from-[#2B2B33] to-[#4B3BB8] text-white">
             <Sparkles size={12} />
           </span>
           Ассистент маршрутов
         </span>
-        <span className="text-[11px] text-muted">92% уверенность · {ago(s.flaggedAt ?? s.departedAt)}</span>
+        <span className="text-[10.5px] text-muted">92% уверенность · {ago(s.flaggedAt ?? s.departedAt)}</span>
       </div>
-      <div className="h-display mt-3 text-[17px] leading-snug">{s.risk === 'ok' ? 'Рейс идёт по графику' : s.reroute ? 'Риск опоздания · смена маршрута' : 'Риск опоздания · уведомить клиентов'}</div>
-      <div className="mt-3 space-y-2.5 text-[12px]">
+      <div className="h-display mt-3 text-[15px] leading-snug">{s.risk === 'ok' ? 'Рейс идёт по графику' : s.reroute ? 'Риск опоздания · смена маршрута' : 'Риск опоздания · уведомить клиентов'}</div>
+      <div className="mt-3 space-y-2.5 text-[11.5px]">
         <div className="grid grid-cols-[96px_1fr] gap-2">
           <span className="label pt-0.5">Что случилось</span>
           <span className="text-ink-2">{s.risk === 'ok' ? 'Отклонений не обнаружено.' : `Рейс отстаёт от плана на ${hoursLabel(lateH)} и прибудет ${dateTime(s.etaAt)}.`}</span>
@@ -467,24 +467,24 @@ function AssistantCard({ s, approved, onReroute, onDone }: { s: any; approved: a
       {s.reroute && (
         <div className="mt-4 grid grid-cols-3 gap-2">
           <div className="rounded-xl bg-white/80 px-3 py-2">
-            <div className="num text-[16px] font-medium text-accent">−{hoursLabel(s.reroute.savedHours)}</div>
-            <div className="text-[10.5px] text-muted">экономия</div>
+            <div className="num text-[14.5px] font-medium text-accent">−{hoursLabel(s.reroute.savedHours)}</div>
+            <div className="text-[10px] text-muted">экономия</div>
           </div>
           <div className="rounded-xl bg-white/80 px-3 py-2">
-            <div className="num text-[16px] font-medium">
+            <div className="num text-[14.5px] font-medium">
               {s.reroute.extraKm >= 0 ? '+' : ''}
               {num(s.reroute.extraKm)}
             </div>
-            <div className="text-[10.5px] text-muted">км к маршруту</div>
+            <div className="text-[10px] text-muted">км к маршруту</div>
           </div>
           <div className="rounded-xl bg-white/80 px-3 py-2">
-            <div className="num text-[16px] font-medium">{time(s.reroute.proposedEta)}</div>
-            <div className="text-[10.5px] text-muted">новый ETA</div>
+            <div className="num text-[14.5px] font-medium">{time(s.reroute.proposedEta)}</div>
+            <div className="text-[10px] text-muted">новый ETA</div>
           </div>
         </div>
       )}
       {approved ? (
-        <div className="mt-4 rounded-xl bg-white/80 px-3 py-2.5 text-[12px]">
+        <div className="mt-4 rounded-xl bg-white/80 px-3 py-2.5 text-[11.5px]">
           <div className="flex items-center gap-1.5 font-medium text-ok">
             <Check size={14} /> {approved.title}
           </div>
@@ -511,7 +511,7 @@ function AssistantCard({ s, approved, onReroute, onDone }: { s: any; approved: a
           </Button>
         )}
         {s.delayNotifiedAt && (
-          <span className="inline-flex items-center gap-1.5 text-[12px] text-ok">
+          <span className="inline-flex items-center gap-1.5 text-[11.5px] text-ok">
             <Check size={14} /> Клиенты уведомлены {ago(s.delayNotifiedAt)}
           </span>
         )}
@@ -541,7 +541,7 @@ function EventModal({ kind, onClose, shipment, onDone }: { kind: null | 'delay' 
         {presets.length > 0 && (
           <div className="flex flex-wrap gap-1.5">
             {presets.map((p) => (
-              <button key={p} onClick={() => setTitle(p)} className={clsx('rounded-full border px-2.5 py-1 text-[11.5px]', title === p ? 'border-ink bg-ink text-white' : 'border-line-2 hover:bg-soft')}>
+              <button key={p} onClick={() => setTitle(p)} className={clsx('rounded-full border px-2.5 py-1 text-[11px]', title === p ? 'border-ink bg-ink text-white' : 'border-line-2 hover:bg-soft')}>
                 {p}
               </button>
             ))}
@@ -592,10 +592,10 @@ function TruckModal({ open, onClose, shipment, onDone }: { open: boolean; onClos
           >
             <Truck size={15} className="text-muted" />
             <div className="flex-1">
-              <div className="text-[12.5px] font-medium">
+              <div className="text-[11.5px] font-medium">
                 {t.model} · {t.plate}
               </div>
-              <div className="text-[11px] text-muted">
+              <div className="text-[10.5px] text-muted">
                 {t.kind} · {kg(t.capacityKg)} · {t.capacityM3} м³ · {t.driverName ?? 'без водителя'}
               </div>
             </div>
