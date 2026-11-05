@@ -1,0 +1,39 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: 'cv11', 'ss01';
+}
+html, body, #root { height: 100%; }
+body { @apply bg-canvas text-ink font-sans text-[13px]; }
+@layer components {
+.num { font-variant-numeric: tabular-nums; }
+.h-display { @apply font-light tracking-[-0.02em]; }
+.label { @apply text-[10.5px] font-medium uppercase tracking-[0.06em] text-muted; }
+.card { @apply bg-white rounded-xl2 shadow-card; }
+.scroll-thin::-webkit-scrollbar { width: 6px; height: 6px; }
+.scroll-thin::-webkit-scrollbar-thumb { background: #dcdcd8; border-radius: 9px; }
+.scroll-thin::-webkit-scrollbar-track { background: transparent; }
+input, select, textarea { @apply outline-none; }
+.field { @apply h-9 w-full rounded-lg border border-line-2 bg-white px-3 text-[13px] transition focus:border-accent focus:ring-4 focus:ring-accent-50; }
+textarea.field { @apply h-auto py-2; }
+}
+.leaflet-container { background: #EEEEEA !important; font-family: inherit !important; }
+.leaflet-control-attribution { font-size: 9px !important; background: rgba(255,255,255,.6) !important; }
+.leaflet-control-zoom { border: none !important; box-shadow: 0 1px 3px rgba(0,0,0,.08), 0 0 0 1px rgba(0,0,0,.05) !important; border-radius: 10px !important; overflow: hidden; }
+.leaflet-control-zoom a { width: 30px !important; height: 30px !important; line-height: 30px !important; color: #111 !important; border-bottom-color: #eee !important; }
+.leaflet-div-icon { background: transparent !important; border: none !important; }
+.leaflet-tooltip.map-tip { background: white; border: none; border-radius: 10px; box-shadow: 0 6px 20px -4px rgba(0,0,0,.18), 0 0 0 1px rgba(0,0,0,.05); padding: 6px 9px; font-size: 11px; color: #111; }
+.leaflet-tooltip.map-tip::before { display: none; }
+@keyframes pulse-ring { 0% { transform: scale(.6); opacity: .7 } 100% { transform: scale(2.2); opacity: 0 } }
+.pulse-ring { animation: pulse-ring 1.8s ease-out infinite; }
+@keyframes stamp { 0% { transform: scale(1.6) rotate(-14deg); opacity: 0 } 60% { transform: scale(.95) rotate(-8deg); opacity: 1 } 100% { transform: scale(1) rotate(-8deg); opacity: 1 } }
+.stamp { animation: stamp .45s cubic-bezier(.2,.9,.3,1.2) forwards; }
+@keyframes fade-up { from { opacity: 0; transform: translateY(6px) } to { opacity: 1; transform: none } }
+.fade-up { animation: fade-up .25s ease-out both; }
+@keyframes shimmer { 0% { background-position: -400px 0 } 100% { background-position: 400px 0 } }
+.skeleton { background: linear-gradient(90deg, #f0f0ee 25%, #f7f7f5 37%, #f0f0ee 63%); background-size: 800px 100%; animation: shimmer 1.3s infinite linear; border-radius: 8px; }
